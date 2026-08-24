@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/vercel": "^11.0.7",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.4",
     "embla-carousel": "^8.6.0",
