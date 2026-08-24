@@ -1,121 +1,266 @@
 ---
-import ChapterNumber from './ChapterNumber.astro';
+/**
+ * Hero Section — Madison-style clean portfolio hero
+ * Layout: photo centered, bold typography, availability badge
+ */
 ---
 
-<section id="hero" class="section hero-section">
-  <!-- Structural grid lines -->
-  <div class="grid-line grid-line--h" style="top: 0;"></div>
-  <div class="crosshair" style="top: -6px; left: calc(var(--space-3) - 6px);" aria-hidden="true"></div>
+<section id="hero" class="hero-section">
+  <div class="hero-container">
+    <!-- Top greeting — italic, flowing over the photo -->
+    <div class="hero-greeting reveal">
+      <span class="greeting-text">Hey,</span>
+      <span class="greeting-text greeting-right">there</span>
+    </div>
 
-  <div class="container">
-    <div class="hero-layout">
-      <!-- Chapter & role label -->
-      <div class="hero-meta reveal">
-        <ChapterNumber number="01" />
-        <span class="text-mono-wide text-secondary">Software & IoT Engineer</span>
+    <!-- Portrait photo -->
+    <div class="hero-portrait reveal">
+      <img
+        src="/images/profile.png"
+        alt="Mochamad Iqbal Maulana — portrait"
+        class="portrait-img"
+        loading="eager"
+        width="460"
+        height="580"
+      />
+    </div>
+
+    <!-- Availability badge -->
+    <div class="hero-badge reveal">
+      <span class="badge-dot"></span>
+      <span class="badge-text">Available for new opportunities</span>
+    </div>
+
+    <!-- Specialization text -->
+    <div class="hero-spec reveal">
+      <p>Specialized in Mobile App Development,<br />IoT Engineering, and Network Infrastructure.</p>
+    </div>
+
+    <!-- Bottom bar: Name left, Role right -->
+    <div class="hero-bottom reveal">
+      <div class="hero-name-block">
+        <h1 class="hero-name">I AM<br />IQBAL</h1>
       </div>
-
-      <!-- Name: massive Fraunces with italic interplay -->
-      <h1 class="headline headline--hero hero-name reveal">
-        <span class="hero-name-line">Mochamad</span>
-        <span class="hero-name-line"><em>Iqbal</em> Maulana</span>
-      </h1>
-
-      <!-- Identity line (editorial sub-headline) -->
-      <p class="hero-identity reveal">
-        Membangun sistem dari sensor sampai layar —<br class="hide-mobile" />
-        mobile, IoT, dan jaringan.
-      </p>
-
-      <!-- Structural divider with coordinate label -->
-      <div class="hero-divider reveal" aria-hidden="true">
-        <div class="grid-line grid-line--h" style="position: relative;"></div>
-        <span class="coord-label" style="position: relative; margin-top: var(--space-1);">
-          48.23°N — portfolio.2026
-        </span>
+      <div class="hero-role-block">
+        <p class="hero-role">SOFTWARE<br />& IoT<br />ENGINEER</p>
       </div>
-
-      <!-- Technical sub-identity -->
-      <p class="hero-sub text-mono text-secondary reveal">
-        Android (Kotlin/Jetpack Compose) · Embedded Systems (ESP32) · Infrastruktur Jaringan
-      </p>
     </div>
   </div>
 </section>
 
 <style>
   .hero-section {
-    min-height: 85vh;
+    position: relative;
+    min-height: 100vh;
     display: flex;
-    align-items: flex-end;
-    padding-bottom: var(--space-12);
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    padding: var(--space-16) var(--space-3) var(--space-6);
   }
 
-  .hero-layout {
-    max-width: 54rem;
-    padding-block: var(--space-4) 0;
-  }
-
-  .hero-meta {
+  .hero-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
     display: flex;
-    align-items: baseline;
-    gap: var(--space-3);
-    margin-bottom: var(--space-6);
+    flex-direction: column;
+    align-items: center;
   }
 
-  .hero-meta .chapter-num {
-    margin-bottom: 0;
+  /* ── Greeting "Hey, there" ── */
+  .hero-greeting {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    z-index: 2;
+    margin-bottom: -3.5rem;
+    padding-inline: var(--space-2);
+    pointer-events: none;
+  }
+
+  .greeting-text {
+    font-family: var(--font-headline);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    color: var(--color-text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .greeting-right {
+    text-align: right;
+  }
+
+  /* ── Portrait ── */
+  .hero-portrait {
+    position: relative;
+    z-index: 1;
+    width: clamp(260px, 45vw, 460px);
+    flex-shrink: 0;
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    /* Soft radial fade at the bottom so it blends into background */
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 70%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black 70%,
+      transparent 100%
+    );
+  }
+
+  /* ── Availability badge ── */
+  .hero-badge {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    display: inline-block;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .badge-text {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ── Specialization text ── */
+  .hero-spec {
+    position: absolute;
+    right: 0;
+    top: 42%;
+    z-index: 3;
+    max-width: 200px;
+    text-align: left;
+  }
+
+  .hero-spec p {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-text-sec);
+  }
+
+  /* ── Bottom bar — Name + Role ── */
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -4rem;
   }
 
   .hero-name {
-    margin-bottom: var(--space-6);
-  }
-
-  .hero-name-line {
-    display: block;
-  }
-
-  .hero-name-line em {
-    font-style: italic;
-    font-weight: 700;
+    font-family: var(--font-headline);
+    font-weight: 900;
+    font-size: clamp(3rem, 10vw, 6rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
     color: var(--color-text);
+    margin: 0;
+    text-transform: uppercase;
   }
 
-  .hero-identity {
-    font-family: var(--font-body);
-    font-size: var(--text-hero-sub);
-    line-height: 1.4;
+  .hero-role {
+    font-family: var(--font-headline);
+    font-weight: 900;
+    font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
     color: var(--color-text);
-    max-width: 36rem;
-    margin-bottom: var(--space-8);
+    text-align: right;
+    text-transform: uppercase;
+    margin: 0;
   }
 
-  .hero-divider {
-    max-width: 20rem;
-    margin-bottom: var(--space-4);
-  }
-
-  .hero-sub {
-    max-width: 36rem;
-  }
-
-  .hide-mobile {
-    display: none;
-  }
-
-  @media (min-width: 768px) {
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
     .hero-section {
-      min-height: 90vh;
-      padding-bottom: var(--space-16);
+      padding-top: var(--space-12);
     }
 
-    .hero-layout {
-      max-width: 64rem;
+    .hero-greeting {
+      margin-bottom: -2rem;
     }
 
-    .hide-mobile {
-      display: inline;
+    .hero-badge {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin-top: var(--space-3);
+      align-self: flex-start;
+    }
+
+    .hero-spec {
+      position: relative;
+      right: auto;
+      top: auto;
+      max-width: 100%;
+      margin-top: var(--space-3);
+      text-align: left;
+    }
+
+    .hero-bottom {
+      margin-top: var(--space-4);
+      flex-direction: row;
+    }
+
+    .hero-name {
+      font-size: 3rem;
+    }
+
+    .hero-role {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 900px) {
+    .hero-badge {
+      left: -1rem;
+    }
+
+    .hero-spec {
+      right: -1rem;
     }
   }
 </style>

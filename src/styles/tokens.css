@@ -4,16 +4,16 @@
    ────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Colors ── */
-  --color-bg:        #F0EAD6;   /* Vintage 1900s newspaper cream */
-  --color-bg-alt:    #E6DEC2;   /* Slightly darker for contrast */
-  --color-surface:   #FFFFFF;   /* card surfaces */
-  --color-text:      #2A2825;   /* softer black/dark brown for vintage ink */
-  --color-text-sec:  #5C574F;   /* warm grey */
-  --color-accent:    #178D68;   /* slightly darker green — better contrast */
-  --color-accent-light: rgba(23, 141, 104, 0.08); /* subtle accent tint */
-  --color-border:    #C8C4BA;   /* slightly stronger border */
-  --color-grid:      rgba(200, 196, 186, 0.5);
+  /* ── Colors — Monochrome (Grey / White / Black) ── */
+  --color-bg:        #F7F7F7;   /* Light grey background */
+  --color-bg-alt:    #EEEEEE;   /* Slightly darker grey for alternating */
+  --color-surface:   #FFFFFF;   /* Card surfaces — pure white */
+  --color-text:      #111111;   /* Near-black for maximum readability */
+  --color-text-sec:  #6B6B6B;   /* Medium grey for secondary text */
+  --color-accent:    #178D68;   /* Green accent — kept for contrast pop */
+  --color-accent-light: rgba(23, 141, 104, 0.06);
+  --color-border:    #D9D9D9;   /* Neutral grey border */
+  --color-grid:      rgba(180, 180, 180, 0.35);
 
   /* ── Typography — three roles ── */
   --font-headline: 'Fraunces', 'Georgia', serif;
