@@ -1,0 +1,234 @@
+---
+import Navbar from '../components/Navbar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Mochamad Iqbal Maulana — Software & IoT Engineer',
+  description = 'Portofolio Mochamad Iqbal Maulana. Membangun sistem dari sensor sampai layar — mobile, IoT, dan jaringan. Android (Kotlin/Jetpack Compose), embedded systems (ESP32), infrastruktur jaringan.',
+} = Astro.props;
+
+const canonicalUrl = Astro.url.href;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts: preconnect + preload critical headline font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data: Person -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Mochamad Iqbal Maulana",
+        "jobTitle": "Software & IoT Engineer",
+        "email": "iqballmaulana1233@gmail.com",
+        "url": canonicalUrl,
+        "sameAs": [
+          "https://www.linkedin.com/in/mochamad-iqbal-maulana-077045297/"
+        ],
+        "knowsAbout": [
+          "Android Development", "Kotlin", "Jetpack Compose",
+          "IoT", "ESP32", "Firebase", "Network Engineering"
+        ],
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Telkom University"
+        }
+      }
+    })} />
+
+    <!-- Styles -->
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+  </head>
+  <body>
+    <!-- Ambient Background System -->
+    <div class="ambient-bg" aria-hidden="true">
+      <div class="ambient-orb ambient-orb--1"></div>
+      <div class="ambient-orb ambient-orb--2"></div>
+      <div class="ambient-grid"></div>
+      <div class="ambient-noise"></div>
+    </div>
+
+    <Navbar />
+    <slot />
+
+    <!-- GSAP: all interactions -->
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const mm = gsap.matchMedia();
+
+        mm.add(
+          {
+            isDesktop: '(min-width: 768px)',
+            isMobile: '(max-width: 767px)',
+            reduceMotion: '(prefers-reduced-motion: reduce)',
+          },
+          (context) => {
+            const { reduceMotion, isDesktop } = context.conditions!;
+            const duration = reduceMotion ? 0 : 0.7;
+            const yOffset = reduceMotion ? 0 : 30;
+
+            // ──────────────────────────────────────────
+            // 1. Hero entrance stagger
+            // ──────────────────────────────────────────
+            const heroEls = document.querySelectorAll('#hero .reveal');
+            if (heroEls.length) {
+              gsap.set(heroEls, { autoAlpha: 0, y: reduceMotion ? 0 : 40 });
+              gsap.to(heroEls, {
+                autoAlpha: 1,
+                y: 0,
+                duration: reduceMotion ? 0 : 1,
+                ease: 'power3.out',
+                stagger: 0.15,
+                delay: 0.2,
+              });
+            }
+
+            // ──────────────────────────────────────────
+            // 2. Batch reveal for all other .reveal elements
+            // ──────────────────────────────────────────
+            const otherReveals = document.querySelectorAll(
+              '.reveal:not(#hero .reveal)'
+            );
+            if (otherReveals.length) {
+              gsap.set(otherReveals, { autoAlpha: 0, y: yOffset });
+
+              ScrollTrigger.batch(otherReveals, {
+                onEnter: (elements: Element[]) => {
+                  gsap.to(elements, {
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: duration,
+                    ease: 'power2.out',
+                    stagger: 0.1,
+                    overwrite: true,
+                  });
+                },
+                start: 'top 88%',
+                once: true,
+              });
+            }
+
+            // ──────────────────────────────────────────
+            // 3. Parallax on project images (desktop only)
+            // ──────────────────────────────────────────
+            if (isDesktop && !reduceMotion) {
+              document.querySelectorAll('.parallax-inner').forEach((el) => {
+                gsap.to(el, {
+                  y: -40,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: el.closest('.parallax-wrap'),
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                  },
+                });
+              });
+            }
+
+            // ──────────────────────────────────────────
+            // 4. Magnetic hover on contact links (desktop, pointer devices)
+            // ──────────────────────────────────────────
+            if (isDesktop && !reduceMotion) {
+              document.querySelectorAll('[data-magnetic]').forEach((el) => {
+                const htmlEl = el as HTMLElement;
+
+                htmlEl.addEventListener('mousemove', (e: MouseEvent) => {
+                  const rect = htmlEl.getBoundingClientRect();
+                  const x = e.clientX - rect.left - rect.width / 2;
+                  const y = e.clientY - rect.top - rect.height / 2;
+
+                  gsap.to(htmlEl, {
+                    x: x * 0.15,
+                    y: y * 0.15,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                  });
+                });
+
+                htmlEl.addEventListener('mouseleave', () => {
+                  gsap.to(htmlEl, {
+                    x: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.4)',
+                  });
+                });
+              });
+            }
+
+            // ──────────────────────────────────────────
+            // 5. Structural grid lines fade in
+            // ──────────────────────────────────────────
+            if (!reduceMotion) {
+              document.querySelectorAll('.grid-line').forEach((line) => {
+                gsap.set(line, { scaleX: 0, transformOrigin: 'left center' });
+                ScrollTrigger.create({
+                  trigger: line,
+                  start: 'top 95%',
+                  once: true,
+                  onEnter: () => {
+                    gsap.to(line, {
+                      scaleX: 1,
+                      duration: 1.2,
+                      ease: 'power2.inOut',
+                    });
+                  },
+                });
+              });
+            }
+
+            // Refresh ScrollTrigger after fonts loaded
+            if (document.fonts) {
+              document.fonts.ready.then(() => {
+                ScrollTrigger.refresh();
+              });
+            }
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

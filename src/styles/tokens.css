@@ -1,0 +1,64 @@
+/* ──────────────────────────────────────────────────────────
+   Design Tokens — editorial/magazine system (10x overhaul)
+   Reference: design.md
+   ────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Colors ── */
+  --color-bg:        #F0EAD6;   /* Vintage 1900s newspaper cream */
+  --color-bg-alt:    #E6DEC2;   /* Slightly darker for contrast */
+  --color-surface:   #FFFFFF;   /* card surfaces */
+  --color-text:      #2A2825;   /* softer black/dark brown for vintage ink */
+  --color-text-sec:  #5C574F;   /* warm grey */
+  --color-accent:    #178D68;   /* slightly darker green — better contrast */
+  --color-accent-light: rgba(23, 141, 104, 0.08); /* subtle accent tint */
+  --color-border:    #C8C4BA;   /* slightly stronger border */
+  --color-grid:      rgba(200, 196, 186, 0.5);
+
+  /* ── Typography — three roles ── */
+  --font-headline: 'Fraunces', 'Georgia', serif;
+  --font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:     'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+  /* ── Type scale (10x: dramatically larger hero) ── */
+  --text-hero:      clamp(3.5rem, 10vw, 8rem);       /* 56-128px — massive */
+  --text-hero-sub:  clamp(1.25rem, 2.5vw, 1.75rem);  /* 20-28px */
+  --text-section:   clamp(1.75rem, 4vw, 2.75rem);    /* 28-44px */
+  --text-pullquote: clamp(1.5rem, 3.5vw, 2.5rem);    /* 24-40px */
+  --text-body:      clamp(1rem, 1.125vw, 1.125rem);
+  --text-meta:      0.8125rem;
+  --text-meta-sm:   0.75rem;
+
+  --lh-hero:    0.95;  /* tighter for massive text */
+  --lh-section: 1.15;
+  --lh-body:    1.7;
+  --lh-meta:    1.5;
+
+  --ls-mono:    0.08em;
+  --ls-wide:    0.15em;  /* extra wide for small labels */
+
+  /* ── Spacing (8px base) ── */
+  --space-1:   0.5rem;
+  --space-2:   1rem;
+  --space-3:   1.5rem;
+  --space-4:   2rem;
+  --space-6:   3rem;
+  --space-8:   4rem;
+  --space-10:  5rem;
+  --space-12:  6rem;
+  --space-16:  8rem;
+  --space-20:  10rem;
+  --space-24:  12rem;
+
+  /* ── Layout ── */
+  --max-width:    1200px;
+  --max-width-wide: 1400px;
+  --grid-gap:     var(--space-6);
+  --section-gap:  var(--space-16);
+
+  /* ── Transitions ── */
+  --ease-editorial: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-hover: 0.3s;
+  --duration-reveal: 0.8s;
+}

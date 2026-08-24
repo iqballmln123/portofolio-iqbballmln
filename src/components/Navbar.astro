@@ -1,0 +1,227 @@
+---
+const navItems = [
+  { label: 'Home', href: '#hero' },
+  { label: 'Journey', href: '#journey' },
+  { label: 'Works', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Contact', href: '#contact' },
+];
+---
+
+<nav class="floating-nav" aria-label="Main Navigation">
+  <ul class="nav-list">
+    {navItems.map((item) => (
+      <li>
+        <a href={item.href} class="nav-link" data-nav-target={item.href.substring(1)}>
+          <span class="nav-text">{item.label}</span>
+          <span class="nav-dot"></span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .floating-nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(244, 241, 234, 0.7); /* Translucent --color-bg */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(200, 196, 186, 0.5); /* Soft border */
+    border-radius: 100px;
+    padding: 0.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: 100px;
+    color: var(--color-text-sec);
+    font-family: var(--font-mono);
+    font-size: var(--text-meta-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-mono);
+    transition: color var(--duration-hover) var(--ease-editorial), background-color var(--duration-hover);
+    /* For magnetic hover */
+    will-change: transform;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+  }
+
+  .nav-link.active {
+    color: var(--color-accent);
+    /* background-color: var(--color-surface); */
+  }
+
+  .nav-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    position: absolute;
+    bottom: 4px;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link.active .nav-dot {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Auto-hide state */
+  .floating-nav.nav-hidden {
+    transform: translate(-50%, 150%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .floating-nav {
+      width: 90%;
+      max-width: 420px;
+      bottom: 1.5rem;
+    }
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.6rem;
+      flex: 1; /* evenly distribute */
+    }
+    .nav-list {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  class FloatingNav {
+    nav: HTMLElement | null;
+    links: NodeListOf<HTMLElement>;
+    sections: HTMLElement[];
+    lastScrollY: number;
+
+    constructor() {
+      this.nav = document.querySelector('.floating-nav');
+      this.links = document.querySelectorAll('.nav-link');
+      this.sections = Array.from(this.links)
+        .map(link => document.getElementById(link.getAttribute('data-nav-target') || ''))
+        .filter(el => el !== null) as HTMLElement[];
+      
+      this.lastScrollY = window.scrollY;
+      
+      if (!this.nav || this.links.length === 0) return;
+      
+      this.init();
+    }
+
+    init() {
+      // 1. ScrollSpy for Active states
+      const observerOptions = {
+        root: null,
+        rootMargin: '-40% 0px -60% 0px', // Trigger when section is in the middle
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            this.updateActive(entry.target.id);
+          }
+        });
+      }, observerOptions);
+
+      this.sections.forEach(section => observer.observe(section));
+
+      // 2. Hide on scroll down, Show on scroll up
+      window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+
+      // 3. Magnetic Effect (Desktop only)
+      if (window.matchMedia('(min-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.links.forEach(link => {
+          link.addEventListener('mousemove', (e) => this.magneticHover(e, link));
+          link.addEventListener('mouseleave', () => this.magneticLeave(link));
+        });
+      }
+    }
+
+    updateActive(id: string) {
+      this.links.forEach(link => {
+        if (link.getAttribute('data-nav-target') === id) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    handleScroll() {
+      if (!this.nav) return;
+      const currentScrollY = window.scrollY;
+      
+      // Auto-hide threshold (don't hide if at the very top)
+      if (currentScrollY > 150) {
+        if (currentScrollY > this.lastScrollY + 10) { // Slight buffer to prevent jitter
+          // Scrolling down
+          this.nav.classList.add('nav-hidden');
+        } else if (currentScrollY < this.lastScrollY - 10) {
+          // Scrolling up
+          this.nav.classList.remove('nav-hidden');
+        }
+      } else {
+        this.nav.classList.remove('nav-hidden');
+      }
+      
+      this.lastScrollY = currentScrollY;
+    }
+
+    magneticHover(e: MouseEvent, el: HTMLElement) {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      gsap.to(el, {
+        x: x * 0.3, // Strength of the pull
+        y: y * 0.3,
+        duration: 0.4,
+        ease: 'power2.out',
+      });
+    }
+
+    magneticLeave(el: HTMLElement) {
+      gsap.to(el, {
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: 'elastic.out(1, 0.3)',
+      });
+    }
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', () => {
+    new FloatingNav();
+  });
+</script>

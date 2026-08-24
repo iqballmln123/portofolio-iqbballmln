@@ -1,0 +1,12 @@
+---
+interface Props {
+  number: string;
+  label?: string;
+}
+
+const { number, label } = Astro.props;
+---
+
+<span class="chapter-num" aria-hidden="true">
+  {number}{label ? ` — ${label}` : ' —'}
+</span>

@@ -1,0 +1,296 @@
+---
+import ChapterNumber from './ChapterNumber.astro';
+
+const skills = [
+  {
+    category: 'Mobile App Development',
+    desc: 'Membangun aplikasi Android native yang responsif dan scalable, berfokus pada arsitektur modern (MVVM/MVI) dan performa UI yang halus.',
+    items: ['Kotlin', 'Jetpack Compose', 'Room', 'Retrofit'],
+    bentoClass: 'bento-large',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`
+  },
+  {
+    category: 'IoT & Embedded Systems',
+    desc: 'Merancang sistem terintegrasi dari pembacaan sensor hardware hingga pengiriman data real-time ke cloud.',
+    items: ['ESP32', 'Firebase', 'Sensor Networks', 'SIM800L'],
+    bentoClass: 'bento-medium',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>` // Abstract circuit/connection
+  },
+  {
+    category: 'Data & Automation',
+    desc: 'Automasi alur kerja dan pelaporan enterprise.',
+    items: ['Python', 'Streamlit', 'pandas'],
+    bentoClass: 'bento-small',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>`
+  },
+  {
+    category: 'Industrial IoT',
+    desc: 'Standar otomasi pabrik (sedang dipelajari).',
+    items: ['TIA Portal', 'PLC', 'SCADA'],
+    bentoClass: 'bento-small',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>`
+  },
+];
+
+const certs = [
+  { name: 'Mobile App Development', issuer: 'BNSP (Badan Nasional Sertifikasi Profesi)' },
+  { name: 'Leadership & Relationship Mgt.', issuer: 'Soft Skills Certification' },
+  { name: 'EPrT (English Proficiency Test)', issuer: 'Language Center' }
+];
+---
+
+<section id="skills" class="section">
+  <div class="grid-line grid-line--h" style="top: 0;" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="skills-header reveal">
+      <ChapterNumber number="04" label="Expertise & Credentials" />
+    </div>
+
+    <!-- BENTO GRID -->
+    <div class="bento-grid reveal">
+      {skills.map((skill) => (
+        <div class={`bento-card ${skill.bentoClass}`}>
+          <!-- Background Abstract Icon Watermark -->
+          <div class="bento-watermark" set:html={skill.icon} />
+          
+          <div class="bento-content">
+            <div class="bento-icon" set:html={skill.icon} />
+            <h3 class="bento-title">{skill.category}</h3>
+            <p class="bento-desc">{skill.desc}</p>
+          </div>
+          
+          <div class="bento-footer">
+            <div class="bento-tags">
+              {skill.items.map((item) => (
+                <span class="bento-tag">{item}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="certs-section reveal">
+      <h3 class="certs-title text-mono-sm text-secondary">Verified Credentials</h3>
+      
+      <div class="certs-grid">
+        {certs.map((cert) => (
+          <div class="credential-badge">
+            <div class="credential-ribbon"></div>
+            <div class="credential-body">
+              <h4 class="credential-name">{cert.name}</h4>
+              <span class="credential-issuer text-mono-sm">{cert.issuer}</span>
+            </div>
+            <div class="credential-stamp">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-header {
+    margin-bottom: var(--space-8);
+  }
+
+  /* ── Bento Grid ── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .bento-card {
+    position: relative;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 260px;
+    overflow: hidden;
+    transition: transform var(--duration-hover) var(--ease-editorial),
+                border-color var(--duration-hover) var(--ease-editorial),
+                box-shadow var(--duration-hover) var(--ease-editorial);
+  }
+
+  .bento-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Abstract Watermark Icon */
+  .bento-watermark {
+    position: absolute;
+    bottom: -10%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
+    color: var(--color-border);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+    transition: color var(--duration-hover) var(--ease-editorial),
+                transform var(--duration-hover) var(--ease-editorial);
+  }
+
+  .bento-card:hover .bento-watermark {
+    color: var(--color-accent);
+    opacity: 0.1;
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .bento-watermark :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .bento-content {
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--space-6);
+  }
+
+  .bento-icon {
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-accent);
+    margin-bottom: var(--space-4);
+  }
+
+  .bento-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .bento-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-3);
+  }
+
+  .bento-desc {
+    color: var(--color-text-sec);
+    line-height: 1.6;
+    max-width: 90%;
+  }
+
+  .bento-footer {
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+  }
+
+  .bento-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .bento-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.625rem;
+    border-radius: 100px; /* pill shape for modern look */
+  }
+
+  /* ── Certifications (Credential Badges) ── */
+  .certs-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .certs-title {
+    text-transform: uppercase;
+    letter-spacing: var(--ls-mono);
+    margin-bottom: var(--space-6);
+  }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .certs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .credential-badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4) var(--space-5);
+    overflow: hidden;
+    transition: transform var(--duration-hover) ease;
+  }
+
+  .credential-badge:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+  }
+
+  .credential-ribbon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--color-accent);
+  }
+
+  .credential-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .credential-name {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .credential-issuer {
+    color: var(--color-text-sec);
+  }
+
+  .credential-stamp {
+    color: var(--color-accent);
+    opacity: 0.2;
+    transition: opacity var(--duration-hover) ease;
+  }
+
+  .credential-badge:hover .credential-stamp {
+    opacity: 1;
+  }
+</style>

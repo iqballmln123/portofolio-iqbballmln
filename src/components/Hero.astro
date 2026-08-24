@@ -1,0 +1,121 @@
+---
+import ChapterNumber from './ChapterNumber.astro';
+---
+
+<section id="hero" class="section hero-section">
+  <!-- Structural grid lines -->
+  <div class="grid-line grid-line--h" style="top: 0;"></div>
+  <div class="crosshair" style="top: -6px; left: calc(var(--space-3) - 6px);" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-layout">
+      <!-- Chapter & role label -->
+      <div class="hero-meta reveal">
+        <ChapterNumber number="01" />
+        <span class="text-mono-wide text-secondary">Software & IoT Engineer</span>
+      </div>
+
+      <!-- Name: massive Fraunces with italic interplay -->
+      <h1 class="headline headline--hero hero-name reveal">
+        <span class="hero-name-line">Mochamad</span>
+        <span class="hero-name-line"><em>Iqbal</em> Maulana</span>
+      </h1>
+
+      <!-- Identity line (editorial sub-headline) -->
+      <p class="hero-identity reveal">
+        Membangun sistem dari sensor sampai layar —<br class="hide-mobile" />
+        mobile, IoT, dan jaringan.
+      </p>
+
+      <!-- Structural divider with coordinate label -->
+      <div class="hero-divider reveal" aria-hidden="true">
+        <div class="grid-line grid-line--h" style="position: relative;"></div>
+        <span class="coord-label" style="position: relative; margin-top: var(--space-1);">
+          48.23°N — portfolio.2026
+        </span>
+      </div>
+
+      <!-- Technical sub-identity -->
+      <p class="hero-sub text-mono text-secondary reveal">
+        Android (Kotlin/Jetpack Compose) · Embedded Systems (ESP32) · Infrastruktur Jaringan
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    min-height: 85vh;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: var(--space-12);
+    overflow: hidden;
+  }
+
+  .hero-layout {
+    max-width: 54rem;
+    padding-block: var(--space-4) 0;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-meta .chapter-num {
+    margin-bottom: 0;
+  }
+
+  .hero-name {
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-name-line {
+    display: block;
+  }
+
+  .hero-name-line em {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .hero-identity {
+    font-family: var(--font-body);
+    font-size: var(--text-hero-sub);
+    line-height: 1.4;
+    color: var(--color-text);
+    max-width: 36rem;
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-divider {
+    max-width: 20rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-sub {
+    max-width: 36rem;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      min-height: 90vh;
+      padding-bottom: var(--space-16);
+    }
+
+    .hero-layout {
+      max-width: 64rem;
+    }
+
+    .hide-mobile {
+      display: inline;
+    }
+  }
+</style>

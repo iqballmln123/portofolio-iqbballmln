@@ -1,0 +1,276 @@
+---
+import ChapterNumber from './ChapterNumber.astro';
+
+const milestones = [
+  {
+    year: '2023 - 2026',
+    role: 'D3 Rekayasa Perangkat Lunak Aplikasi',
+    company: 'Telkom University',
+    desc: 'Membangun dasar rekayasa perangkat lunak dengan fokus pada integrasi sistem end-to-end. Berawal dari pengembangan aplikasi Android native (Kotlin, Jetpack Compose), kemudian berekspansi ke ranah hardware/embedded systems (IoT, ESP32, sensor pintar).',
+  },
+  {
+    year: 'Feb - Jun 2026',
+    role: 'Network & IoT Engineering Intern',
+    company: 'Telkomsel',
+    desc: 'Berperan di Divisi Network Operations. Merancang dan mengembangkan alat automasi pelaporan coverage jaringan seluler menggunakan Python dan Streamlit. Tools ini diserahterimakan dan secara aktif mempercepat alur kerja harian tim operasional lapangan.',
+  },
+  {
+    year: 'Present & Future',
+    role: 'Menuju Industrial & Mining Automation',
+    company: 'Next Step',
+    desc: 'Mengarahkan fokus pada skala enterprise yang lebih masif. Mempelajari dan mengeksplorasi infrastruktur otomasi industri kelas berat seperti TIA Portal, PLC, dan SCADA, untuk menjembatani inovasi software modern ke dalam sektor industri.',
+  },
+];
+---
+
+<section id="journey" class="section border-top">
+  <div class="container">
+    <div class="reveal">
+      <ChapterNumber number="02" label="Journey / Timeline" />
+    </div>
+
+    <div class="timeline-container reveal">
+      <!-- Track (Background Line) -->
+      <div class="timeline-track"></div>
+      
+      <!-- The Glowing Progress Line -->
+      <div class="timeline-glow" id="timeline-glow"></div>
+
+      <div class="timeline-items">
+        {milestones.map((item, i) => (
+          <div class="timeline-item" data-index={i}>
+            <div class="timeline-dot-wrapper">
+              <div class="timeline-dot"></div>
+              <div class="timeline-dot-glow"></div>
+            </div>
+            
+            <div class="timeline-content">
+              <span class="timeline-year text-mono-sm">{item.year}</span>
+              <h3 class="timeline-role">{item.role}</h3>
+              <span class="timeline-company">{item.company}</span>
+              <p class="timeline-desc text-secondary">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline-container {
+    margin-top: var(--space-8);
+    position: relative;
+    padding-left: 24px;
+    max-width: 48rem;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-container {
+      padding-left: 32px;
+    }
+  }
+
+  /* The background line */
+  .timeline-track {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-border);
+  }
+
+  /* The glowing line that fills up */
+  .timeline-glow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0%; /* controlled by GSAP */
+    background-color: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+    z-index: 1;
+  }
+
+  .timeline-items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  /* The Dot */
+  .timeline-dot-wrapper {
+    position: absolute;
+    left: -24px; /* match container padding */
+    top: 6px;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-dot-wrapper {
+      left: -32px;
+    }
+  }
+
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-border);
+    transition: all 0.4s ease;
+  }
+
+  .timeline-dot-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.4s ease;
+    filter: blur(4px);
+    z-index: -1;
+  }
+
+  /* Content */
+  .timeline-content {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-5);
+    border-radius: 2px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    transition: transform 0.4s ease, opacity 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0.5; /* dim until active */
+    transform: translateX(0);
+    position: relative;
+  }
+  
+  /* Little arrow pointing to the timeline */
+  .timeline-content::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-surface);
+    border-left: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    transform: rotate(45deg);
+    transition: border-color 0.4s ease;
+  }
+
+  .timeline-year {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    color: var(--color-text-sec);
+    margin-bottom: var(--space-3);
+    transition: all 0.4s ease;
+  }
+
+  .timeline-role {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+    line-height: 1.2;
+  }
+
+  .timeline-company {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text-sec);
+    margin-bottom: var(--space-4);
+    transition: color 0.4s ease;
+  }
+
+  .timeline-desc {
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  /* ── ACTIVE STATE (triggered by GSAP ScrollTrigger) ── */
+  
+  .timeline-item.is-active .timeline-dot {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .timeline-item.is-active .timeline-dot-glow {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  .timeline-item.is-active .timeline-content {
+    opacity: 1;
+    transform: translateX(8px);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 40px rgba(23, 141, 104, 0.05);
+  }
+
+  .timeline-item.is-active .timeline-content::before {
+    border-color: var(--color-accent);
+  }
+
+  .timeline-item.is-active .timeline-year {
+    color: var(--color-accent);
+    border-color: rgba(23, 141, 104, 0.3);
+    background-color: rgba(23, 141, 104, 0.05);
+  }
+
+  .timeline-item.is-active .timeline-company {
+    color: var(--color-text);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Ensure this runs after Astro page transitions and DOM loads
+  document.addEventListener('DOMContentLoaded', initTimeline);
+  
+  // Optional: If you use ViewTransitions in Astro, use astro:page-load
+  // document.addEventListener('astro:page-load', initTimeline);
+
+  function initTimeline() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Line Glow Animation
+    const glow = document.getElementById('timeline-glow');
+    if (glow) {
+      gsap.to(glow, {
+        height: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.timeline-container',
+          start: 'top 60%', // Starts filling when top of container hits 60% of viewport
+          end: 'bottom 60%',
+          scrub: true,
+        }
+      });
+    }
+
+    // 2. Active State Toggle for Items
+    const items = document.querySelectorAll('.timeline-item');
+    items.forEach((item) => {
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 60%', // Trigger when item reaches 60% of viewport
+        toggleClass: { targets: item, className: 'is-active' },
+        // if you want it to stay active once reached, remove toggleActions or leave default
+      });
+    });
+  }
+</script>
