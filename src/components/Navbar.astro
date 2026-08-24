@@ -24,7 +24,7 @@ const navItems = [
 <style>
   .floating-nav {
     position: fixed;
-    bottom: 2rem;
+    top: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
@@ -89,18 +89,12 @@ const navItems = [
     transform: scale(1);
   }
 
-  /* Auto-hide state */
-  .floating-nav.nav-hidden {
-    transform: translate(-50%, 150%);
-    opacity: 0;
-    pointer-events: none;
-  }
 
   @media (max-width: 768px) {
     .floating-nav {
       width: 90%;
       max-width: 420px;
-      bottom: 1.5rem;
+      top: 1rem;
     }
     .nav-link {
       padding: 0.5rem 0.75rem;
@@ -121,7 +115,6 @@ const navItems = [
     nav: HTMLElement | null;
     links: NodeListOf<HTMLElement>;
     sections: HTMLElement[];
-    lastScrollY: number;
 
     constructor() {
       this.nav = document.querySelector('.floating-nav');
@@ -129,8 +122,6 @@ const navItems = [
       this.sections = Array.from(this.links)
         .map(link => document.getElementById(link.getAttribute('data-nav-target') || ''))
         .filter(el => el !== null) as HTMLElement[];
-      
-      this.lastScrollY = window.scrollY;
       
       if (!this.nav || this.links.length === 0) return;
       
@@ -155,10 +146,7 @@ const navItems = [
 
       this.sections.forEach(section => observer.observe(section));
 
-      // 2. Hide on scroll down, Show on scroll up
-      window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
-
-      // 3. Magnetic Effect (Desktop only)
+      // 2. Magnetic Effect (Desktop only)
       if (window.matchMedia('(min-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         this.links.forEach(link => {
           link.addEventListener('mousemove', (e) => this.magneticHover(e, link));
@@ -175,26 +163,6 @@ const navItems = [
           link.classList.remove('active');
         }
       });
-    }
-
-    handleScroll() {
-      if (!this.nav) return;
-      const currentScrollY = window.scrollY;
-      
-      // Auto-hide threshold (don't hide if at the very top)
-      if (currentScrollY > 150) {
-        if (currentScrollY > this.lastScrollY + 10) { // Slight buffer to prevent jitter
-          // Scrolling down
-          this.nav.classList.add('nav-hidden');
-        } else if (currentScrollY < this.lastScrollY - 10) {
-          // Scrolling up
-          this.nav.classList.remove('nav-hidden');
-        }
-      } else {
-        this.nav.classList.remove('nav-hidden');
-      }
-      
-      this.lastScrollY = currentScrollY;
     }
 
     magneticHover(e: MouseEvent, el: HTMLElement) {
