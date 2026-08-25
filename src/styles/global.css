@@ -323,7 +323,7 @@ a:hover {
 
 /* ── Stacked Card Transition ── */
 
-.stacked-card-wrapper {
+.stacked-cards-container {
   position: relative;
 }
 
@@ -336,6 +336,8 @@ a:hover {
   margin-bottom: var(--space-12);
   transition: transform 0.3s var(--ease-editorial);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  overflow: hidden; /* STRICT CLIPPING: prevents marquee/content leak onto page background */
+  contain: paint;
 }
 
 /* ── Infinite Marquee Ticker ── */
@@ -343,17 +345,24 @@ a:hover {
 .marquee-container {
   overflow: hidden;
   width: 100%;
+  max-width: 100%;
   white-space: nowrap;
   position: relative;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  contain: paint;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
 .marquee-track {
-  display: inline-flex;
-  gap: var(--space-4);
-  animation: marquee-scroll 25s linear infinite;
+  display: flex;
+  width: max-content;
+  gap: var(--space-3);
+  animation: marquee-scroll 20s linear infinite;
   will-change: transform;
+}
+
+.marquee-track .tool-tag {
+  flex-shrink: 0;
 }
 
 .marquee-container:hover .marquee-track {

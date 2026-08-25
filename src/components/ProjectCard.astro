@@ -109,6 +109,8 @@ const marqueeTools = [...toolsList, ...toolsList, ...toolsList, ...toolsList];
 <style>
   .project-article {
     padding: var(--space-6);
+    overflow: hidden;
+    position: relative;
   }
 
   @media (min-width: 768px) {
@@ -233,6 +235,11 @@ const marqueeTools = [...toolsList, ...toolsList, ...toolsList, ...toolsList];
   }
 
   /* ── Narrative Text Column ── */
+  .project-content-scroll {
+    overflow: hidden;
+    width: 100%;
+  }
+
   .project-header {
     margin-bottom: var(--space-6);
   }
@@ -266,11 +273,14 @@ const marqueeTools = [...toolsList, ...toolsList, ...toolsList, ...toolsList];
     line-height: 1.6;
   }
 
-  /* Marquee Tech Stack */
+  /* Marquee Tech Stack Wrapper */
   .project-marquee-wrapper {
     margin-top: var(--space-8);
     padding-top: var(--space-4);
     border-top: 0.5px solid var(--color-border);
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
   .marquee-label {
@@ -290,6 +300,8 @@ const marqueeTools = [...toolsList, ...toolsList, ...toolsList, ...toolsList];
     display: inline-block;
     background-color: var(--color-bg);
     border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 </style>
 
