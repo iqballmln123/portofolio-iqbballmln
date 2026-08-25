@@ -329,31 +329,61 @@ const milestones = [
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Geometry & Texture
-    // Kita buat Plane (lembaran rata) yang proporsinya menyesuaikan gambar asli.
-    // Asumsi gambar proporsinya vertikal (contoh: rasio 3:4)
-    const geometry = new THREE.PlaneGeometry(3, 4);
-    
+    // Lighting untuk efek 3D realistis
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    dirLight.position.set(5, 5, 6);
+    scene.add(dirLight);
+
+    const rimLight = new THREE.DirectionalLight(0x178d68, 1.0); // Sentuhan warna aksen
+    rimLight.position.set(-5, -3, -4);
+    scene.add(rimLight);
+
+    // Geometry & Texture untuk Kotak 3D (BoxGeometry)
+    // Width: 2.6, Height: 3.6, Depth: 0.45 (Memiliki ketebalan nyata)
+    const geometry = new THREE.BoxGeometry(2.6, 3.6, 0.45);
+
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load('/images/super-iot-man-box.png', () => {
-      // Menyesuaikan rasio aspek geometri setelah tekstur dimuat
-      const imgAspect = texture.image.width / texture.image.height;
-      const baseHeight = 4;
-      geometry.scale(1, 1, 1); // Reset
-      // Perbarui proporsi
-      plane.scale.set(baseHeight * imgAspect / 3, 1, 1);
+    const texture = textureLoader.load('/images/super-iot-man-box.png', (loadedTex) => {
+      loadedTex.colorSpace = THREE.SRGBColorSpace;
+      const imgAspect = loadedTex.image.width / loadedTex.image.height;
+      const baseHeight = 3.6;
+      const calcWidth = baseHeight * imgAspect;
+      // Perbarui dimensi kotak agar persis sesuai rasio aspek gambar PNG
+      boxMesh.scale.set(calcWidth / 2.6, 1, 1);
     });
 
-    const material = new THREE.MeshBasicMaterial({ 
+    // Material Samping/Belakang: Plastik Hitam/Abu-abu gelap yang elegan
+    const sideMaterial = new THREE.MeshStandardMaterial({ 
+      color: 0x141416, 
+      roughness: 0.25, 
+      metalness: 0.3 
+    });
+
+    // Material Depan: Gambar PNG Kotak Mainan
+    const frontMaterial = new THREE.MeshStandardMaterial({ 
       map: texture,
       transparent: true,
-      side: THREE.DoubleSide
+      roughness: 0.3,
+      metalness: 0.1
     });
-    
-    const plane = new THREE.Mesh(geometry, material);
-    scene.add(plane);
 
-    // Mouse Tracking untuk efek rotasi hologram
+    // Urutan sisi BoxGeometry Three.js: [Right, Left, Top, Bottom, Front, Back]
+    const materials = [
+      sideMaterial,
+      sideMaterial,
+      sideMaterial,
+      sideMaterial,
+      frontMaterial,
+      sideMaterial
+    ];
+
+    const boxMesh = new THREE.Mesh(geometry, materials);
+    scene.add(boxMesh);
+
+    // Mouse & Touch Tracking untuk rotasi 3D interaktif
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -366,8 +396,9 @@ const milestones = [
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       
-      mouseX = (x - windowHalfX) / 100;
-      mouseY = (y - windowHalfY) / 100;
+      // Jangkauan rotasi yang lebih terasa (hingga 45 derajat) agar ketebalan 3D terlihat
+      mouseX = ((x - windowHalfX) / windowHalfX) * 0.8;
+      mouseY = ((y - windowHalfY) / windowHalfY) * 0.6;
     });
 
     container.addEventListener('mouseleave', () => {
@@ -384,16 +415,24 @@ const milestones = [
       renderer.setSize(newWidth, newHeight);
     });
 
-    // Animation Loop
+    // Animation Loop dengan efek animasi idle melayang (Floating Animation)
+    let clock = new THREE.Clock();
+
     function animate() {
       requestAnimationFrame(animate);
 
-      // Lerp (pergerakan halus) menuju posisi mouse
-      targetX = mouseX * 0.5;
-      targetY = mouseY * 0.5;
+      const elapsedTime = clock.getElapsedTime();
 
-      plane.rotation.y += 0.05 * (targetX - plane.rotation.y);
-      plane.rotation.x += 0.05 * (targetY - plane.rotation.x);
+      // Target rotasi dari gerakan mouse
+      targetX = mouseX;
+      targetY = mouseY;
+
+      // Lerp (smooth interpolation)
+      boxMesh.rotation.y += 0.05 * (targetX - boxMesh.rotation.y);
+      boxMesh.rotation.x += 0.05 * (targetY - boxMesh.rotation.x);
+
+      // Animasi melayang meliuk halus (Sine Wave Float)
+      boxMesh.position.y = Math.sin(elapsedTime * 1.5) * 0.08;
 
       renderer.render(scene, camera);
     }
