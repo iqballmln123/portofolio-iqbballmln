@@ -40,7 +40,7 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
         
         <!-- Header -->
         <div class="project-detail-header reveal">
-          <ChapterNumber number={project.chapter} label="Case Study" />
+          <ChapterNumber number={project.chapter} label="Case Study Showcase" />
           <h1 class="headline headline--hero project-detail-title">{project.title}</h1>
           <p class="project-detail-tagline text-secondary">{project.tagline}</p>
           
@@ -51,34 +51,63 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
           </div>
         </div>
 
-        <!-- Full Gallery Carousel (Embla) -->
+        <!-- Premium macOS / Device Framing Photo Showcase Gallery (Embla) -->
         <div class="project-detail-gallery reveal">
           <project-gallery>
-            <div class="gallery-container">
+            <div class="device-window-frame">
+              <!-- Window Header Bar (macOS Style) -->
+              <div class="window-header-bar">
+                <div class="window-dots">
+                  <span class="dot dot--red"></span>
+                  <span class="dot dot--yellow"></span>
+                  <span class="dot dot--green"></span>
+                </div>
+                <div class="window-url text-mono-sm">
+                  <span>iqbal.dev/case-study/{project.slug}</span>
+                </div>
+                <div class="window-counter text-mono-sm" data-indicator>
+                  01 / {String(project.images.length).padStart(2, '0')}
+                </div>
+              </div>
+
+              <!-- Main Viewport -->
               <div class="embla__viewport" data-embla-viewport>
                 <div class="embla__container">
                   {project.images.map((img, idx) => (
                     <div class="embla__slide">
                       <div class="slide-inner">
-                        <img src={img.src} alt={img.alt} loading={idx === 0 ? "eager" : "lazy"} />
+                        <div class="image-stage">
+                          <img src={img.src} alt={img.alt} loading={idx === 0 ? "eager" : "lazy"} class="showcase-img" />
+                        </div>
                       </div>
-                      <span class="img-caption text-mono-sm">{img.alt}</span>
+                      <div class="slide-caption-bar">
+                        <span class="caption-num text-mono-sm">FIG {(idx + 1).toString().padStart(2, '0')}</span>
+                        <span class="img-caption text-mono-sm">{img.alt}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-              
-              {project.images.length > 1 && (
-                <div class="gallery-controls">
-                  <div class="gallery-indicator text-mono-sm" data-indicator>
-                    1 / {project.images.length}
-                  </div>
-                  <div class="gallery-nav">
-                    <button class="nav-btn" data-prev aria-label="Previous image">←</button>
-                    <button class="nav-btn" data-next aria-label="Next image">→</button>
-                  </div>
+
+              <!-- Interactive Controls & Navigation Toolbar -->
+              <div class="window-toolbar">
+                <button class="nav-btn" data-prev aria-label="Previous screenshot">
+                  <span class="btn-icon">←</span> <span class="btn-text text-mono-sm">PREV</span>
+                </button>
+
+                <!-- Thumbnails Strip -->
+                <div class="thumbnails-strip" data-thumbnails>
+                  {project.images.map((img, idx) => (
+                    <button class="thumb-btn" data-thumb-index={idx} aria-label={`Jump to slide ${idx + 1}`}>
+                      <img src={img.src} alt={img.alt} />
+                    </button>
+                  ))}
                 </div>
-              )}
+
+                <button class="nav-btn" data-next aria-label="Next screenshot">
+                  <span class="btn-text text-mono-sm">NEXT</span> <span class="btn-icon">→</span>
+                </button>
+              </div>
             </div>
           </project-gallery>
         </div>
@@ -190,18 +219,61 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     color: var(--color-text);
   }
 
-  /* ── Gallery ── */
+  /* ── Premium macOS Device Window Frame Gallery ── */
   .project-detail-gallery {
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-16);
   }
 
-  .gallery-container {
-    border: 1px solid var(--color-border);
+  .device-window-frame {
     background-color: var(--color-surface);
-    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 20px 48px rgba(10, 10, 10, 0.06);
+    display: flex;
+    flex-direction: column;
   }
 
+  /* Window Header Bar (macOS Dots & Title) */
+  .window-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .window-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .dot--red { background-color: #FF5F56; }
+  .dot--yellow { background-color: #FFBD2E; }
+  .dot--green { background-color: #27C93F; }
+
+  .window-url {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.2rem 1rem;
+    border-radius: 100px;
+    color: var(--color-text-sec);
+    font-size: 0.75rem;
+  }
+
+  .window-counter {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  /* Main Viewport & Slide Stage */
   .embla__viewport {
     overflow: hidden;
   }
@@ -223,58 +295,128 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-bg-alt);
-    padding: var(--space-4);
+    background: radial-gradient(circle at center, #F5F4EE 0%, var(--color-bg-alt) 100%);
+    padding: var(--space-6);
+    position: relative;
   }
 
   @media (min-width: 768px) {
     .slide-inner {
-      height: 560px;
+      height: 580px;
+      padding: var(--space-8);
     }
   }
 
-  .slide-inner img {
+  .image-stage {
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.12));
+  }
+
+  .showcase-img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    border-radius: 4px;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .slide-caption-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .caption-num {
+    color: var(--color-text-sec);
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-weight: 500;
+    flex-shrink: 0;
   }
 
   .img-caption {
-    padding: 0.5rem 1rem;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    color: var(--color-text-sec);
-    text-align: center;
+    color: var(--color-text);
   }
 
-  .gallery-controls {
+  /* Navigation Toolbar & Thumbnails Strip */
+  .window-toolbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: var(--space-3) var(--space-4);
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-bg);
     border-top: 1px solid var(--color-border);
-    background-color: var(--color-surface);
-  }
-
-  .gallery-nav {
-    display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .nav-btn {
-    background: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     cursor: pointer;
-    padding: 0.375rem 0.875rem;
+    padding: 0.5rem 1rem;
     color: var(--color-text);
     border-radius: 4px;
     font-family: var(--font-mono);
     transition: all 0.2s ease;
+    flex-shrink: 0;
   }
 
   .nav-btn:hover {
-    background-color: var(--color-bg);
+    background-color: var(--color-text);
+    color: var(--color-bg);
     border-color: var(--color-text);
+  }
+
+  .thumbnails-strip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-block: 0.25rem;
+    scroll-behavior: smooth;
+  }
+
+  .thumb-btn {
+    width: 54px;
+    height: 36px;
+    border-radius: 4px;
+    border: 1.5px solid var(--color-border);
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.6;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  .thumb-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb-btn:hover {
+    opacity: 0.9;
+    border-color: var(--color-text-sec);
+  }
+
+  .thumb-btn.is-active {
+    opacity: 1;
+    border-color: var(--color-text);
+    transform: scale(1.05);
   }
 
   /* ── Narrative Breakdown ── */
@@ -306,7 +448,6 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     color: var(--color-text-sec);
     margin-bottom: var(--space-3);
     font-weight: 500;
-
   }
 
   .narrative-text {
@@ -366,14 +507,33 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
       const prevBtn = this.querySelector('[data-prev]');
       const nextBtn = this.querySelector('[data-next]');
       const indicator = this.querySelector('[data-indicator]');
+      const thumbBtns = this.querySelectorAll<HTMLButtonElement>('[data-thumb-index]');
       
       if (prevBtn) prevBtn.addEventListener('click', () => emblaApi.scrollPrev());
       if (nextBtn) nextBtn.addEventListener('click', () => emblaApi.scrollNext());
+
+      thumbBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.thumbIndex || '0', 10);
+          emblaApi.scrollTo(index);
+        });
+      });
       
       const updateIndicator = () => {
+        const selected = emblaApi.selectedScrollSnap();
+        const total = emblaApi.scrollSnapList().length;
+
         if (indicator) {
-          indicator.textContent = `${emblaApi.selectedScrollSnap() + 1} / ${emblaApi.scrollSnapList().length}`;
+          indicator.textContent = `${String(selected + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
         }
+
+        thumbBtns.forEach((btn, idx) => {
+          if (idx === selected) {
+            btn.classList.add('is-active');
+          } else {
+            btn.classList.remove('is-active');
+          }
+        });
       };
       
       emblaApi.on('select', updateIndicator);
