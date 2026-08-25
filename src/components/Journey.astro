@@ -29,19 +29,19 @@ const pillars = [
   {
     number: '01',
     title: 'Mobile App Engineering',
-    tags: 'Kotlin · Jetpack Compose · MVVM',
+    tags: ['Kotlin', 'Jetpack Compose', 'MVVM'],
     desc: 'Pengembangan aplikasi Android native berkinerja tinggi dengan UI deklaratif, alur reaktif, dan arsitektur scalable.',
   },
   {
     number: '02',
     title: 'IoT & Embedded Systems',
-    tags: 'ESP32 · Sensors · Firebase · GSM',
+    tags: ['ESP32', 'Sensors', 'Firebase', 'GSM'],
     desc: 'Integrasi hardware multi-sensor (tanah, air, pH, TDS, kelistrikan) ke cloud dan aplikasi mobile secara real-time.',
   },
   {
     number: '03',
     title: 'Network & Automation',
-    tags: 'Python · Streamlit · Telkomsel Ops',
+    tags: ['Python', 'Streamlit', 'Telkomsel Ops'],
     desc: 'Automasi alur kerja pelaporan enterprise yang mempercepat pengolahan data lapangan untuk tim Network Operations.',
   },
 ];
@@ -65,16 +65,21 @@ const pillars = [
       </p>
     </div>
 
-    <!-- Core Engineering Pillars (Stagger Reveal) -->
+    <!-- Core Engineering Pillars (Clean Layout & Pill Badges) -->
     <div class="pillars-section">
       <h3 class="section-sublabel text-mono-sm text-secondary reveal">CORE ENGINEERING PILLARS</h3>
       <div class="pillars-grid">
         {pillars.map((pillar, idx) => (
           <div class="pillar-card pillar-stagger" data-index={idx}>
-            <div class="pillar-header">
-              <span class="pillar-num">{pillar.number}</span>
-              <span class="pillar-tags text-mono-sm text-secondary">{pillar.tags}</span>
+            <div class="pillar-top-row">
+              <span class="pillar-num-badge text-mono-sm">{pillar.number}</span>
+              <div class="pillar-tag-list">
+                {pillar.tags.map((tag) => (
+                  <span class="pillar-tag-pill text-mono-sm">{tag}</span>
+                ))}
+              </div>
             </div>
+            
             <h4 class="pillar-title">{pillar.title}</h4>
             <p class="pillar-desc text-secondary">{pillar.desc}</p>
           </div>
@@ -167,12 +172,13 @@ const pillars = [
   .pillars-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: var(--space-6);
   }
 
   @media (min-width: 768px) {
     .pillars-grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
     }
   }
 
@@ -181,6 +187,9 @@ const pillars = [
     border: 1px solid var(--color-border);
     padding: var(--space-6);
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     transition: border-color var(--duration-hover) var(--ease-editorial),
                 transform var(--duration-hover) var(--ease-editorial);
   }
@@ -190,37 +199,54 @@ const pillars = [
     transform: translateY(-4px);
   }
 
-  .pillar-header {
+  .pillar-top-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-3);
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: var(--space-4);
   }
 
-  .pillar-num {
+  .pillar-num-badge {
+    align-self: flex-start;
     font-family: var(--font-mono);
-    font-size: var(--text-meta);
-    letter-spacing: var(--ls-wide);
-    color: var(--color-text-sec);
+    font-size: 0.75rem;
     font-weight: 700;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
   }
 
-  .pillar-tags {
+  .pillar-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .pillar-tag-pill {
+    font-family: var(--font-mono);
     font-size: 0.75rem;
+    color: var(--color-text-sec);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    line-height: 1.4;
   }
 
   .pillar-title {
     font-family: var(--font-headline);
-    font-size: 1.25rem;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
     font-weight: 700;
     line-height: 1.25;
     color: var(--color-text);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
   }
 
   .pillar-desc {
     font-size: 0.9375rem;
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
   /* ── Milestones Pinned Horizontal Scroll ── */
@@ -376,7 +402,7 @@ const pillars = [
         if (track && pinnedSection && isDesktop && !reduceMotion) {
           const trackWidth = track.scrollWidth;
           const containerWidth = pinnedSection.offsetWidth;
-          const amountToScroll = trackWidth - containerWidth + 48; // padding offset
+          const amountToScroll = trackWidth - containerWidth + 48;
 
           gsap.to(track, {
             x: -amountToScroll,
