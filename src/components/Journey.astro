@@ -29,40 +29,108 @@ const milestones = [
       <ChapterNumber number="02" label="Journey / Timeline" />
     </div>
 
-    <div class="timeline-container reveal">
-      <!-- Track (Background Line) -->
-      <div class="timeline-track"></div>
-      
-      <!-- The Glowing Progress Line -->
-      <div class="timeline-glow" id="timeline-glow"></div>
+    <div class="journey-grid">
+      <!-- Left Column: Timeline -->
+      <div class="journey-left">
+        <div class="timeline-container reveal">
+          <!-- Track (Background Line) -->
+          <div class="timeline-track"></div>
+          
+          <!-- The Glowing Progress Line -->
+          <div class="timeline-glow" id="timeline-glow"></div>
 
-      <div class="timeline-items">
-        {milestones.map((item, i) => (
-          <div class="timeline-item" data-index={i}>
-            <div class="timeline-dot-wrapper">
-              <div class="timeline-dot"></div>
-              <div class="timeline-dot-glow"></div>
-            </div>
-            
-            <div class="timeline-content">
-              <span class="timeline-year text-mono-sm">{item.year}</span>
-              <h3 class="timeline-role">{item.role}</h3>
-              <span class="timeline-company">{item.company}</span>
-              <p class="timeline-desc text-secondary">{item.desc}</p>
-            </div>
+          <div class="timeline-items">
+            {milestones.map((item, i) => (
+              <div class="timeline-item" data-index={i}>
+                <div class="timeline-dot-wrapper">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-dot-glow"></div>
+                </div>
+                
+                <div class="timeline-content">
+                  <span class="timeline-year text-mono-sm">{item.year}</span>
+                  <h3 class="timeline-role">{item.role}</h3>
+                  <span class="timeline-company">{item.company}</span>
+                  <p class="timeline-desc text-secondary">{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+      </div>
+
+      <!-- Right Column: 3D Model -->
+      <div class="journey-right reveal">
+        <!-- Google Model Viewer component -->
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+        
+        <div class="model-container">
+          <!-- Nanti tambahkan file .glb ke public/models/ lalu isi di src="" -->
+          <model-viewer 
+            src="/models/model-1787622392004.glb" 
+            alt="Iqbal 3D Character Design" 
+            auto-rotate 
+            camera-controls 
+            disable-zoom
+            shadow-intensity="1"
+            class="model-viewer-element"
+          >
+            <div slot="poster" class="model-placeholder">
+              <p class="text-mono-sm text-secondary">3D Model Space (.GLB)</p>
+            </div>
+          </model-viewer>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
+  .journey-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    margin-top: var(--space-12);
+  }
+
+  @media (min-width: 1024px) {
+    .journey-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+  }
+
   .timeline-container {
-    margin-top: var(--space-8);
     position: relative;
     padding-left: 24px;
-    max-width: 48rem;
+    width: 100%;
+  }
+
+  /* 3D Model Container Styles */
+  .model-container {
+    width: 100%;
+    height: 500px;
+    background: var(--color-bg-alt);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .model-viewer-element {
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+  }
+
+  .model-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--color-border);
+    border-radius: 4px;
   }
 
   @media (min-width: 768px) {
