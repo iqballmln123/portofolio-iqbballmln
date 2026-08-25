@@ -1,0 +1,86 @@
+export interface ProjectData {
+  slug: string;
+  chapter: string;
+  title: string;
+  tagline: string;
+  problem: string;
+  process: string;
+  result: string;
+  tools: string;
+  coverImage: string;
+  images: { src: string; alt: string }[];
+  isFeatured: boolean;
+}
+
+export const featuredProjects: ProjectData[] = [
+  {
+    slug: 'sitanam',
+    chapter: '03.1',
+    title: 'SiTanam IoT — Sistem Penyiraman Tanaman (Tugas Akhir)',
+    tagline: 'Sistem penyiraman tanaman berbasis ESP32 & multi-sensor dengan perbandingan terukur metode spray vs hidroponik.',
+    problem: 'Penyiraman tanaman manual sulit konsisten dan tidak responsif terhadap kondisi aktual tanah/air, terutama saat membandingkan efektivitas dua metode penyiraman berbeda (spray vs hidroponik).',
+    process: 'Sistem menggunakan ESP32 sebagai kontroler utama dengan multi-sensor (DHT22, soil moisture, water level, pH, TDS) untuk membaca kondisi tanaman secara real-time. Data dikirim ke Firebase, lalu ditampilkan dan dikontrol via aplikasi Android native (Kotlin & Jetpack Compose).',
+    result: 'Tugas Akhir selesai dengan perbandingan data terukur antara teknik spray dan hidroponik, didukung sistem monitoring mobile interaktif.',
+    tools: 'Kotlin, Jetpack Compose, ESP32, Firebase, DHT22',
+    coverImage: '/images/featured/sitanam-dashboard.png',
+    images: [
+      { src: '/images/featured/sitanam-dashboard.png', alt: 'Dashboard SiTanam' },
+      { src: '/images/featured/sitanam-kontrol.png', alt: 'Kontrol Pompa' },
+      { src: '/images/featured/sitanam-skema.png', alt: 'Skema IoT' },
+      { src: '/images/featured/sitanam-hardware.jpg', alt: 'Hardware ESP32 + sensor' },
+      { src: '/images/featured/sitanam-settings.png', alt: 'Settings' },
+    ],
+    isFeatured: true,
+  },
+  {
+    slug: 'telkomsel-report',
+    chapter: '03.2',
+    title: 'Telkomsel Coverage Report Automator',
+    tagline: 'Automasi penyusunan laporan coverage jaringan seluler dari data mentah lapangan ke PowerPoint standar Telkomsel.',
+    problem: 'Tim Network Operations Telkomsel menyusun laporan coverage jaringan secara manual dari data lapangan — proses yang berulang dan memakan waktu di setiap siklus pelaporan.',
+    process: 'Dibangun selama internship di Divisi Network & IoT Telkomsel (Februari–Juni 2026). Aplikasi membaca data mentah (Excel/CSV) dan foto lapangan, lalu menyusunnya otomatis ke dalam format laporan PowerPoint sesuai standar branding Telkomsel.',
+    result: 'Diuji dalam skala nyata dan diserahterimakan (handover) ke tim Network Operations untuk dipakai sebagai alat kerja rutin.',
+    tools: 'Python, Streamlit, python-pptx, pandas',
+    coverImage: '/images/featured/telkomsel-app.png',
+    images: [
+      { src: '/images/featured/telkomsel-app.png', alt: 'Aplikasi Streamlit — input data' },
+      { src: '/images/featured/telkomsel-output.jpg', alt: 'Output PowerPoint report' },
+      { src: '/images/featured/telkomsel-code.jpg', alt: 'Kode auto-report' },
+    ],
+    isFeatured: true,
+  },
+  {
+    slug: 'smart-mcb',
+    chapter: '03.3',
+    title: 'Smart MCB IoT Concept',
+    tagline: 'Konsep monitoring dan kontrol kelistrikan gedung jarak jauh via ESP32 dan GSM bridge.',
+    problem: 'Kebutuhan monitoring dan kontrol jarak jauh terhadap sistem kelistrikan skala gedung/mall (studi kasus Trans Studio Makassar) tanpa harus intervensi manual di panel.',
+    process: 'Dirancang menggunakan hardware Tuya eWeLink dengan ESP32 dan SIM800L sebagai jembatan komunikasi GSM, memungkinkan kontrol MCB dari jarak jauh tanpa bergantung sepenuhnya pada koneksi WiFi lokal.',
+    result: 'Konsep desain sistem yang menghubungkan pengalaman IoT konsumer dengan kebutuhan skala industrial/komersial — menjadi portofolio menuju industrial IoT.',
+    tools: 'ESP32, SIM800L, Tuya eWeLink, GSM bridge design',
+    coverImage: '/images/featured/mcb-install.jpg',
+    images: [
+      { src: '/images/featured/mcb-install.jpg', alt: 'Pemasangan MCB di Trans Studio Makassar' },
+    ],
+    isFeatured: true,
+  },
+  {
+    slug: 'glowup',
+    chapter: '03.4',
+    title: 'GlowUp — Beauty & Skincare App (BNSP)',
+    tagline: 'Aplikasi Android pelacak rutinitas perawatan kulit berbasis Kotlin dan Jetpack Compose.',
+    problem: 'Pengguna kesulitan melacak rutinitas perawatan kulit secara konsisten, memahami kebutuhan kulit mereka, dan mendapatkan rekomendasi produk yang tepat.',
+    process: 'Dibangun dengan Kotlin dan Jetpack Compose sebagai proyek sertifikasi BNSP. Fitur meliputi analisa kulit, rekomendasi produk, jurnal perawatan harian, dan step-by-step routine guide — dari splash screen hingga dashboard interaktif.',
+    result: 'Aplikasi berhasil divalidasi sebagai kompetensi profesional melalui sertifikasi BNSP Mobile App Development.',
+    tools: 'Kotlin, Jetpack Compose, Android Architecture',
+    coverImage: '/images/featured/glowup-dashboard.jpeg',
+    images: [
+      { src: '/images/featured/glowup-dashboard.jpeg', alt: 'Dashboard GlowUp' },
+      { src: '/images/featured/glowup-analisa.jpeg', alt: 'Analisa Kulit' },
+      { src: '/images/featured/glowup-rekomendasi.jpeg', alt: 'Rekomendasi Produk' },
+      { src: '/images/featured/glowup-jurnal.png', alt: 'Jurnal Perawatan' },
+      { src: '/images/featured/glowup-steps.jpeg', alt: 'Step-by-step Guide' },
+    ],
+    isFeatured: false,
+  },
+];
