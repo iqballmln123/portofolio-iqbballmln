@@ -24,15 +24,16 @@ const {
 } = Astro.props;
 
 const toolsList = tools.split(',').map((t) => t.trim());
+// Duplicate tools list to ensure smooth infinite marquee scroll
+const marqueeTools = [...toolsList, ...toolsList, ...toolsList, ...toolsList];
 ---
 
-<article class="project-article section">
-  <div class="grid-line grid-line--h" style="top: 0;" aria-hidden="true"></div>
-
-  <div class="container container--wide">
+<article class="project-article stacked-card">
+  <div class="project-card-inner">
     <div class={`project-grid ${reverse ? 'project-grid--reverse' : ''}`}>
-      <!-- Image side: Embla Carousel System -->
-      <div class="project-media reveal">
+      
+      <!-- Sticky Media Gallery Column -->
+      <div class="project-media-sticky">
         <project-gallery>
           <div class="gallery-container">
             <!-- Embla Viewport -->
@@ -48,7 +49,7 @@ const toolsList = tools.split(',').map((t) => t.trim());
               </div>
             </div>
             
-            <!-- Controls -->
+            <!-- Gallery Controls -->
             {images.length > 1 && (
               <div class="gallery-controls">
                 <div class="gallery-indicator" data-indicator>
@@ -64,8 +65,8 @@ const toolsList = tools.split(',').map((t) => t.trim());
         </project-gallery>
       </div>
 
-      <!-- Text side -->
-      <div class="project-content reveal">
+      <!-- Scrolling Narrative Text Column -->
+      <div class="project-content-scroll">
         <div class="project-header">
           <ChapterNumber number={chapter} />
           <h2 class="headline headline--section project-title">{title}</h2>
@@ -88,11 +89,18 @@ const toolsList = tools.split(',').map((t) => t.trim());
           </div>
         </div>
 
-        <div class="project-tools">
-          {toolsList.map((tool) => (
-            <span class="tool-tag">{tool}</span>
-          ))}
+        <!-- Tech Stack Infinite Marquee Ticker -->
+        <div class="project-marquee-wrapper">
+          <span class="marquee-label text-mono-sm text-secondary">Tech Stack</span>
+          <div class="marquee-container">
+            <div class="marquee-track">
+              {marqueeTools.map((tool) => (
+                <span class="tool-tag">{tool}</span>
+              ))}
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -100,48 +108,58 @@ const toolsList = tools.split(',').map((t) => t.trim());
 
 <style>
   .project-article {
-    position: relative;
+    padding: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .project-article {
+      padding: var(--space-8);
+    }
   }
 
   .project-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
 
   @media (min-width: 768px) {
     .project-grid {
-      grid-template-columns: 1.3fr 1fr;
-      gap: var(--space-6);
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-8);
       align-items: start;
     }
 
     .project-grid--reverse {
-      grid-template-columns: 1fr 1.3fr;
+      grid-template-columns: 1fr 1.2fr;
     }
 
-    .project-grid--reverse > :first-child {
+    .project-grid--reverse > .project-media-sticky {
       order: 2;
     }
 
-    .project-grid--reverse > :last-child {
+    .project-grid--reverse > .project-content-scroll {
       order: 1;
-    }
-
-    .project-content {
-      position: relative;
-      z-index: 2;
-      padding-top: var(--space-4);
     }
   }
 
-  /* ── Gallery System (Embla) ── */
+  /* ── Sticky Image Column (Desktop) ── */
+  @media (min-width: 768px) {
+    .project-media-sticky {
+      position: sticky;
+      top: 8rem;
+      z-index: 2;
+    }
+  }
+
   .gallery-container {
     position: relative;
     border: 1px solid var(--color-border);
-    background-color: var(--color-surface);
+    background-color: var(--color-bg);
     display: flex;
     flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
   }
 
   .embla__viewport {
@@ -154,47 +172,43 @@ const toolsList = tools.split(',').map((t) => t.trim());
 
   .embla__slide {
     flex: 0 0 100%;
-    min-width: 0; /* Important for flexbox */
+    min-width: 0;
   }
 
-  /* 
-   * Container untuk setiap gambar. 
-   * Dibatasi tingginya agar HP tidak meluber, dan menggunakan object-fit: contain
-   * agar gambar proporsional (tidak di-zoom in).
-   */
   .slide-inner {
-    height: 480px; 
+    height: 380px; 
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #E8E4DC;
-    padding: var(--space-2);
+    background-color: var(--color-bg-alt);
+    padding: var(--space-3);
   }
 
-  @media (max-width: 767px) {
+  @media (min-width: 768px) {
     .slide-inner {
-      height: 400px;
+      height: 440px;
     }
   }
 
   .slide-inner img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Kunci agar SS HP tidak kebesaran/terpotong */
+    object-fit: contain;
   }
 
-  /* ── Controls ── */
+  /* Controls */
   .gallery-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2) var(--space-4);
     border-top: 1px solid var(--color-border);
     font-family: var(--font-mono);
     font-size: var(--text-meta-sm);
     color: var(--color-text-sec);
     letter-spacing: var(--ls-mono);
+    background-color: var(--color-surface);
   }
 
   .gallery-nav {
@@ -210,18 +224,15 @@ const toolsList = tools.split(',').map((t) => t.trim());
     color: var(--color-text);
     transition: all var(--duration-hover) var(--ease-editorial);
     font-family: var(--font-mono);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 2px;
   }
 
   .nav-btn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    background-color: var(--color-accent-light);
+    border-color: var(--color-text);
+    background-color: var(--color-bg);
   }
 
-  /* ── Text content ── */
+  /* ── Narrative Text Column ── */
   .project-header {
     margin-bottom: var(--space-6);
   }
@@ -241,41 +252,44 @@ const toolsList = tools.split(',').map((t) => t.trim());
     font-size: var(--text-meta-sm);
     letter-spacing: var(--ls-wide);
     text-transform: uppercase;
-    color: var(--color-accent);
-    font-weight: 400;
+    color: var(--color-text-sec);
+    font-weight: 500;
     margin-bottom: 0.375rem;
     padding-bottom: 0.25rem;
-    border-bottom: 1.5px solid var(--color-accent);
+    border-bottom: 1.5px solid var(--color-border-alt);
     display: inline-block;
   }
 
   .detail-block p {
     max-width: 32rem;
     color: var(--color-text);
+    line-height: 1.6;
   }
 
-  .project-tools {
-    margin-top: var(--space-6);
-    padding-top: var(--space-3);
+  /* Marquee Tech Stack */
+  .project-marquee-wrapper {
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
     border-top: 0.5px solid var(--color-border);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
+  }
+
+  .marquee-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
   }
 
   .tool-tag {
     font-family: var(--font-mono);
     font-size: var(--text-meta-sm);
     letter-spacing: var(--ls-mono);
-    color: var(--color-text-sec);
+    color: var(--color-text);
     border: 1px solid var(--color-border);
     padding: 0.25rem 0.75rem;
     display: inline-block;
-    background-color: var(--color-surface);
-  }
-
-  .project-media {
-    position: relative;
+    background-color: var(--color-bg);
+    border-radius: 100px;
   }
 </style>
 

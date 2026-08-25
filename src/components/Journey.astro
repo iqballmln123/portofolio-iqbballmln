@@ -3,21 +3,24 @@ import ChapterNumber from './ChapterNumber.astro';
 
 const milestones = [
   {
+    num: '01',
     year: '2023 - 2026',
     role: 'D3 Rekayasa Perangkat Lunak Aplikasi',
     company: 'Telkom University',
     desc: 'Membangun dasar rekayasa perangkat lunak dengan fokus pada integrasi sistem end-to-end. Berawal dari pengembangan aplikasi Android native (Kotlin, Jetpack Compose), kemudian berekspansi ke ranah hardware/embedded systems (IoT, ESP32, sensor pintar).',
   },
   {
+    num: '02',
     year: 'Feb - Jun 2026',
     role: 'Network & IoT Engineering Intern',
-    company: 'Telkomsel',
+    company: 'Telkomsel Operations',
     desc: 'Berperan di Divisi Network Operations. Merancang dan mengembangkan alat automasi pelaporan coverage jaringan seluler menggunakan Python dan Streamlit. Tools ini diserahterimakan dan secara aktif mempercepat alur kerja harian tim operasional lapangan.',
   },
   {
+    num: '03',
     year: 'Present & Future',
     role: 'Menuju Industrial & Mining Automation',
-    company: 'Next Step',
+    company: 'Next Step Enterprise',
     desc: 'Mengarahkan fokus pada skala enterprise yang lebih masif. Mempelajari dan mengeksplorasi infrastruktur otomasi industri kelas berat seperti TIA Portal, PLC, dan SCADA, untuk menjembatani inovasi software modern ke dalam sektor industri.',
   },
 ];
@@ -26,7 +29,7 @@ const pillars = [
   {
     number: '01',
     title: 'Mobile App Engineering',
-    tags: 'Kotlin · Jetpack Compose · Architecture',
+    tags: 'Kotlin · Jetpack Compose · MVVM',
     desc: 'Pengembangan aplikasi Android native berkinerja tinggi dengan UI deklaratif, alur reaktif, dan arsitektur scalable.',
   },
   {
@@ -50,62 +53,53 @@ const pillars = [
       <ChapterNumber number="02" label="About & Journey" />
     </div>
 
-    <!-- Editorial Bio Intro Block -->
-    <div class="about-hero-block reveal">
-      <blockquote class="about-pull-quote">
-        "Lulusan D3 Rekayasa Perangkat Lunak Aplikasi dari Telkom University dengan latar belakang mobile development, IoT engineering, dan jaringan telekomunikasi."
-      </blockquote>
-      <p class="about-narrative text-secondary">
+    <!-- Editorial Bio Hero Block with Line-by-Line Reveal -->
+    <div class="about-hero-block">
+      <div class="quote-reveal-wrap">
+        <blockquote class="about-pull-quote quote-line" id="quote-line-1">
+          "Lulusan D3 Rekayasa Perangkat Lunak Aplikasi dari Telkom University dengan latar belakang mobile development, IoT engineering, dan jaringan telekomunikasi."
+        </blockquote>
+      </div>
+      <p class="about-narrative text-secondary reveal">
         Memulai dari pengembangan aplikasi Android dengan Kotlin dan Jetpack Compose, lalu memperluas ke sistem IoT berbasis ESP32 dan Firebase. Pada awal 2026 menyelesaikan internship di Divisi Network & IoT Telkomsel, membangun automasi pelaporan coverage jaringan yang dipakai langsung oleh tim Network Operations. Saat ini mengarahkan langkah berikutnya ke sektor industrial dan mining IoT.
       </p>
     </div>
 
-    <!-- Asymmetric Grid: Pillars & Timeline -->
-    <div class="journey-grid">
-      <!-- Left Column: Core Focus Pillars -->
-      <div class="journey-left reveal">
-        <h3 class="section-sublabel text-mono-sm text-secondary">CORE ENGINEERING PILLARS</h3>
-        <div class="pillars-list">
-          {pillars.map((pillar) => (
-            <div class="pillar-card">
-              <div class="pillar-header">
-                <span class="pillar-num">{pillar.number}</span>
-                <span class="pillar-tags text-mono-sm text-secondary">{pillar.tags}</span>
+    <!-- Core Engineering Pillars (Stagger Reveal) -->
+    <div class="pillars-section">
+      <h3 class="section-sublabel text-mono-sm text-secondary reveal">CORE ENGINEERING PILLARS</h3>
+      <div class="pillars-grid">
+        {pillars.map((pillar, idx) => (
+          <div class="pillar-card pillar-stagger" data-index={idx}>
+            <div class="pillar-header">
+              <span class="pillar-num">{pillar.number}</span>
+              <span class="pillar-tags text-mono-sm text-secondary">{pillar.tags}</span>
+            </div>
+            <h4 class="pillar-title">{pillar.title}</h4>
+            <p class="pillar-desc text-secondary">{pillar.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Career Milestones: Pinned Horizontal Scroll on Desktop -->
+    <div class="timeline-section" id="timeline-pinned-section">
+      <h3 class="section-sublabel text-mono-sm text-secondary reveal">CAREER MILESTONES</h3>
+
+      <!-- Track Container for Horizontal Pin -->
+      <div class="milestones-pin-wrapper">
+        <div class="milestones-horizontal-track" id="milestones-track">
+          {milestones.map((item) => (
+            <div class="milestone-card-item">
+              <div class="milestone-parallax-num" data-speed="0.8">{item.num}</div>
+              <div class="milestone-content">
+                <span class="milestone-year text-mono-sm">{item.year}</span>
+                <h4 class="milestone-role">{item.role}</h4>
+                <span class="milestone-company">{item.company}</span>
+                <p class="milestone-desc text-secondary">{item.desc}</p>
               </div>
-              <h4 class="pillar-title">{pillar.title}</h4>
-              <p class="pillar-desc text-secondary">{pillar.desc}</p>
             </div>
           ))}
-        </div>
-      </div>
-
-      <!-- Right Column: Career Timeline -->
-      <div class="journey-right">
-        <h3 class="section-sublabel text-mono-sm text-secondary reveal">CAREER MILESTONES</h3>
-        <div class="timeline-container reveal">
-          <!-- Track (Background Line) -->
-          <div class="timeline-track"></div>
-          
-          <!-- The Progress Line -->
-          <div class="timeline-glow" id="timeline-glow"></div>
-
-          <div class="timeline-items">
-            {milestones.map((item, i) => (
-              <div class="timeline-item" data-index={i}>
-                <div class="timeline-dot-wrapper">
-                  <div class="timeline-dot"></div>
-                  <div class="timeline-dot-glow"></div>
-                </div>
-                
-                <div class="timeline-content">
-                  <span class="timeline-year text-mono-sm">{item.year}</span>
-                  <h4 class="timeline-role">{item.role}</h4>
-                  <span class="timeline-company">{item.company}</span>
-                  <p class="timeline-desc text-secondary">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
@@ -124,6 +118,11 @@ const pillars = [
     border-bottom: 0.5px solid var(--color-border);
   }
 
+  .quote-reveal-wrap {
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+  }
+
   .about-pull-quote {
     font-family: var(--font-headline);
     font-style: italic;
@@ -131,7 +130,6 @@ const pillars = [
     font-size: clamp(1.375rem, 3vw, 2.25rem);
     line-height: 1.35;
     color: var(--color-text);
-    margin-bottom: var(--space-4);
     max-width: 54rem;
     position: relative;
     padding-left: var(--space-6);
@@ -144,7 +142,7 @@ const pillars = [
     top: 0.25rem;
     bottom: 0.25rem;
     width: 3px;
-    background-color: var(--color-accent);
+    background-color: var(--color-text);
   }
 
   .about-narrative {
@@ -154,19 +152,9 @@ const pillars = [
     max-width: 52rem;
   }
 
-  /* ── Asymmetric Layout Grid ── */
-  .journey-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-12);
-  }
-
-  @media (min-width: 992px) {
-    .journey-grid {
-      grid-template-columns: 1fr 1.1fr;
-      gap: var(--space-12);
-      align-items: start;
-    }
+  /* ── Pillars Grid ── */
+  .pillars-section {
+    margin-bottom: var(--space-16);
   }
 
   .section-sublabel {
@@ -176,41 +164,44 @@ const pillars = [
     text-transform: uppercase;
   }
 
-  /* ── Pillars List ── */
-  .pillars-list {
-    display: flex;
-    flex-direction: column;
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   .pillar-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-    padding: var(--space-5);
-    border-radius: 2px;
-    transition: transform var(--duration-hover) var(--ease-editorial),
-                border-color var(--duration-hover) var(--ease-editorial),
-                box-shadow var(--duration-hover) var(--ease-editorial);
+    padding: var(--space-6);
+    border-radius: 4px;
+    transition: border-color var(--duration-hover) var(--ease-editorial),
+                transform var(--duration-hover) var(--ease-editorial);
   }
 
   .pillar-card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+    border-color: var(--color-text);
+    transform: translateY(-4px);
   }
 
   .pillar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
   }
 
   .pillar-num {
     font-family: var(--font-mono);
     font-size: var(--text-meta);
     letter-spacing: var(--ls-wide);
-    color: var(--color-accent);
+    color: var(--color-text-sec);
     font-weight: 700;
   }
 
@@ -232,162 +223,88 @@ const pillars = [
     line-height: 1.55;
   }
 
-  /* ── Timeline Styles ── */
-  .timeline-container {
-    position: relative;
-    padding-left: 28px;
+  /* ── Milestones Pinned Horizontal Scroll ── */
+  .timeline-section {
+    overflow: hidden;
+  }
+
+  .milestones-pin-wrapper {
     width: 100%;
   }
 
+  .milestones-horizontal-track {
+    display: flex;
+    gap: var(--space-6);
+    width: max-content;
+    will-change: transform;
+  }
+
+  .milestone-card-item {
+    position: relative;
+    width: 320px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    border-radius: 4px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
   @media (min-width: 768px) {
-    .timeline-container {
-      padding-left: 32px;
+    .milestone-card-item {
+      width: 420px;
     }
   }
 
-  .timeline-track {
+  .milestone-parallax-num {
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: var(--color-border);
+    right: -10px;
+    bottom: -20px;
+    font-family: var(--font-headline);
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(10, 10, 10, 0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 
-  .timeline-glow {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 2px;
-    height: 0%;
-    background-color: var(--color-accent);
+  .milestone-content {
+    position: relative;
     z-index: 1;
   }
 
-  .timeline-items {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-  }
-
-  .timeline-item {
-    position: relative;
-  }
-
-  .timeline-dot-wrapper {
-    position: absolute;
-    left: -28px;
-    top: 18px;
-    transform: translateX(-50%);
-    z-index: 2;
-  }
-
-  @media (min-width: 768px) {
-    .timeline-dot-wrapper {
-      left: -32px;
-    }
-  }
-
-  .timeline-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--color-bg);
-    border: 2px solid var(--color-border);
-    transition: all 0.3s ease;
-  }
-
-  .timeline-dot-glow {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background-color: var(--color-accent);
-    opacity: 0;
-    transform: scale(0);
-    transition: all 0.3s ease;
-    z-index: -1;
-  }
-
-  .timeline-content {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: var(--space-4) var(--space-5);
-    border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
-    opacity: 0.6;
-    position: relative;
-  }
-
-  .timeline-content::before {
-    content: '';
-    position: absolute;
-    left: -5px;
-    top: 18px;
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-surface);
-    border-left: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-    transform: rotate(45deg);
-    transition: border-color 0.3s ease;
-  }
-
-  .timeline-year {
+  .milestone-year {
     display: inline-block;
-    padding: 0.125rem 0.5rem;
+    padding: 0.25rem 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: 100px;
     color: var(--color-text-sec);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
     font-size: 0.75rem;
+    background-color: var(--color-bg);
   }
 
-  .timeline-role {
+  .milestone-role {
     font-family: var(--font-headline);
-    font-size: 1.125rem;
+    font-size: 1.375rem;
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: 0.125rem;
+    margin-bottom: 0.25rem;
     line-height: 1.25;
   }
 
-  .timeline-company {
+  .milestone-company {
     display: block;
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--color-text-sec);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-4);
   }
 
-  .timeline-desc {
-    line-height: 1.55;
-    font-size: 0.875rem;
-  }
-
-  /* Active State */
-  .timeline-item.is-active .timeline-dot {
-    background-color: var(--color-accent);
-    border-color: var(--color-accent);
-  }
-
-  .timeline-item.is-active .timeline-dot-glow {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  .timeline-item.is-active .timeline-content {
-    opacity: 1;
-    border-color: var(--color-accent);
-  }
-
-  .timeline-item.is-active .timeline-content::before {
-    border-color: var(--color-accent);
-  }
-
-  .timeline-item.is-active .timeline-year {
-    color: var(--color-accent);
-    border-color: rgba(29, 158, 117, 0.3);
-    background-color: rgba(29, 158, 117, 0.05);
+  .milestone-desc {
+    line-height: 1.6;
+    font-size: 0.9375rem;
   }
 </style>
 
@@ -395,32 +312,101 @@ const pillars = [
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  document.addEventListener('DOMContentLoaded', initTimeline);
+  document.addEventListener('DOMContentLoaded', initJourneyAnimations);
 
-  function initTimeline() {
+  function initJourneyAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    const glow = document.getElementById('timeline-glow');
-    if (glow) {
-      gsap.to(glow, {
-        height: '100%',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.timeline-container',
-          start: 'top 65%',
-          end: 'bottom 65%',
-          scrub: true,
-        },
-      });
-    }
+    const mm = gsap.matchMedia();
 
-    const items = document.querySelectorAll('.timeline-item');
-    items.forEach((item) => {
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 65%',
-        toggleClass: { targets: item, className: 'is-active' },
-      });
-    });
+    mm.add(
+      {
+        isDesktop: '(min-width: 768px)',
+        isMobile: '(max-width: 767px)',
+        reduceMotion: '(prefers-reduced-motion: reduce)',
+      },
+      (context) => {
+        const { reduceMotion, isDesktop } = context.conditions!;
+
+        // 1. Text Reveal Animation for Pull Quote
+        const quoteLine = document.querySelector('.quote-line');
+        if (quoteLine && !reduceMotion) {
+          gsap.fromTo(
+            quoteLine,
+            { clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)', autoAlpha: 0 },
+            {
+              clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+              autoAlpha: 1,
+              duration: 1.2,
+              ease: 'power3.inOut',
+              scrollTrigger: {
+                trigger: '.quote-reveal-wrap',
+                start: 'top 85%',
+                once: true,
+              },
+            }
+          );
+        }
+
+        // 2. Pillars Stagger Reveal
+        const pillarCards = document.querySelectorAll('.pillar-stagger');
+        if (pillarCards.length && !reduceMotion) {
+          gsap.fromTo(
+            pillarCards,
+            { autoAlpha: 0, y: 40 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.15,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: '.pillars-grid',
+                start: 'top 85%',
+                once: true,
+              },
+            }
+          );
+        }
+
+        // 3. Pinned Horizontal Scroll on Desktop for Career Milestones
+        const track = document.getElementById('milestones-track');
+        const pinnedSection = document.getElementById('timeline-pinned-section');
+
+        if (track && pinnedSection && isDesktop && !reduceMotion) {
+          const trackWidth = track.scrollWidth;
+          const containerWidth = pinnedSection.offsetWidth;
+          const amountToScroll = trackWidth - containerWidth + 48; // padding offset
+
+          gsap.to(track, {
+            x: -amountToScroll,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: pinnedSection,
+              pin: true,
+              scrub: 1,
+              start: 'top 20%',
+              end: () => `+=${amountToScroll}`,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          // Parallax movement for big numbers inside milestone cards
+          const nums = document.querySelectorAll('.milestone-parallax-num');
+          nums.forEach((num) => {
+            gsap.to(num, {
+              x: -60,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: pinnedSection,
+                scrub: 1,
+                start: 'top 20%',
+                end: () => `+=${amountToScroll}`,
+              },
+            });
+          });
+        }
+      }
+    );
   }
 </script>

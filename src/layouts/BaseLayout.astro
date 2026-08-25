@@ -39,11 +39,11 @@ const canonicalUrl = Astro.url.href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Fonts: preconnect + preload critical headline font -->
+    <!-- Fonts: Fraunces (serif display), Inter (body), JetBrains Mono (labels) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -79,16 +79,17 @@ const canonicalUrl = Astro.url.href;
   <body>
     <!-- Ambient Background System -->
     <div class="ambient-bg" aria-hidden="true">
-      <div class="ambient-orb ambient-orb--1"></div>
-      <div class="ambient-orb ambient-orb--2"></div>
       <div class="ambient-grid"></div>
       <div class="ambient-noise"></div>
     </div>
 
+    <!-- Cursor Spotlight Overlay -->
+    <div class="cursor-spotlight" id="cursor-spotlight" aria-hidden="true"></div>
+
     <Navbar />
     <slot />
 
-    <!-- GSAP: all interactions -->
+    <!-- GSAP Global Interactions -->
     <script>
       import { gsap } from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -110,7 +111,29 @@ const canonicalUrl = Astro.url.href;
             const yOffset = reduceMotion ? 0 : 30;
 
             // ──────────────────────────────────────────
-            // 1. Hero entrance stagger
+            // 1. Spotlight Cursor Follow (Desktop)
+            // ──────────────────────────────────────────
+            const spotlight = document.getElementById('cursor-spotlight');
+            if (spotlight && isDesktop && !reduceMotion) {
+              let mouseX = window.innerWidth / 2;
+              let mouseY = window.innerHeight / 2;
+              let spotX = mouseX;
+              let spotY = mouseY;
+
+              window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+              });
+
+              gsap.ticker.add(() => {
+                spotX += (mouseX - spotX) * 0.1;
+                spotY += (mouseY - spotY) * 0.1;
+                gsap.set(spotlight, { x: spotX, y: spotY });
+              });
+            }
+
+            // ──────────────────────────────────────────
+            // 2. Hero entrance stagger (UNTOUCHED 100%)
             // ──────────────────────────────────────────
             const heroEls = document.querySelectorAll('#hero .reveal');
             if (heroEls.length) {
@@ -126,7 +149,7 @@ const canonicalUrl = Astro.url.href;
             }
 
             // ──────────────────────────────────────────
-            // 2. Batch reveal for all other .reveal elements
+            // 3. Batch reveal for all non-hero .reveal elements
             // ──────────────────────────────────────────
             const otherReveals = document.querySelectorAll(
               '.reveal:not(#hero .reveal)'
@@ -147,76 +170,6 @@ const canonicalUrl = Astro.url.href;
                 },
                 start: 'top 88%',
                 once: true,
-              });
-            }
-
-            // ──────────────────────────────────────────
-            // 3. Parallax on project images (desktop only)
-            // ──────────────────────────────────────────
-            if (isDesktop && !reduceMotion) {
-              document.querySelectorAll('.parallax-inner').forEach((el) => {
-                gsap.to(el, {
-                  y: -40,
-                  ease: 'none',
-                  scrollTrigger: {
-                    trigger: el.closest('.parallax-wrap'),
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true,
-                  },
-                });
-              });
-            }
-
-            // ──────────────────────────────────────────
-            // 4. Magnetic hover on contact links (desktop, pointer devices)
-            // ──────────────────────────────────────────
-            if (isDesktop && !reduceMotion) {
-              document.querySelectorAll('[data-magnetic]').forEach((el) => {
-                const htmlEl = el as HTMLElement;
-
-                htmlEl.addEventListener('mousemove', (e: MouseEvent) => {
-                  const rect = htmlEl.getBoundingClientRect();
-                  const x = e.clientX - rect.left - rect.width / 2;
-                  const y = e.clientY - rect.top - rect.height / 2;
-
-                  gsap.to(htmlEl, {
-                    x: x * 0.15,
-                    y: y * 0.15,
-                    duration: 0.4,
-                    ease: 'power2.out',
-                  });
-                });
-
-                htmlEl.addEventListener('mouseleave', () => {
-                  gsap.to(htmlEl, {
-                    x: 0,
-                    y: 0,
-                    duration: 0.6,
-                    ease: 'elastic.out(1, 0.4)',
-                  });
-                });
-              });
-            }
-
-            // ──────────────────────────────────────────
-            // 5. Structural grid lines fade in
-            // ──────────────────────────────────────────
-            if (!reduceMotion) {
-              document.querySelectorAll('.grid-line').forEach((line) => {
-                gsap.set(line, { scaleX: 0, transformOrigin: 'left center' });
-                ScrollTrigger.create({
-                  trigger: line,
-                  start: 'top 95%',
-                  once: true,
-                  onEnter: () => {
-                    gsap.to(line, {
-                      scaleX: 1,
-                      duration: 1.2,
-                      ease: 'power2.inOut',
-                    });
-                  },
-                });
               });
             }
 

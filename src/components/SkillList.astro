@@ -3,31 +3,24 @@ import ChapterNumber from './ChapterNumber.astro';
 
 const skills = [
   {
-    category: 'Mobile App Development',
-    desc: 'Membangun aplikasi Android native yang responsif dan scalable, berfokus pada arsitektur modern (MVVM/MVI) dan performa UI yang halus.',
-    items: ['Kotlin', 'Jetpack Compose', 'Room', 'Retrofit'],
-    bentoClass: 'bento-large',
+    category: 'Mobile App Development & IoT',
+    desc: 'Membangun aplikasi Android native berkinerja tinggi yang terhubung langsung dengan perangkat hardware & embedded systems secara real-time.',
+    items: ['Kotlin', 'Jetpack Compose', 'ESP32', 'Firebase', 'Room', 'Retrofit', 'SIM800L'],
+    bentoClass: 'bento-hero',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`
   },
   {
-    category: 'IoT & Embedded Systems',
-    desc: 'Merancang sistem terintegrasi dari pembacaan sensor hardware hingga pengiriman data real-time ke cloud.',
-    items: ['ESP32', 'Firebase', 'Sensor Networks', 'SIM800L'],
-    bentoClass: 'bento-medium',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>` // Abstract circuit/connection
-  },
-  {
     category: 'Data & Automation',
-    desc: 'Automasi alur kerja dan pelaporan enterprise.',
-    items: ['Python', 'Streamlit', 'pandas'],
-    bentoClass: 'bento-small',
+    desc: 'Automasi alur kerja pelaporan enterprise yang mengolah data lapangan secara presisi.',
+    items: ['Python', 'Streamlit', 'pandas', 'python-pptx'],
+    bentoClass: 'bento-secondary',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>`
   },
   {
-    category: 'Industrial IoT',
-    desc: 'Standar otomasi pabrik (sedang dipelajari).',
-    items: ['TIA Portal', 'PLC', 'SCADA'],
-    bentoClass: 'bento-small',
+    category: 'Industrial IoT & Otomasi',
+    desc: 'Standar otomasi industri dan kontrol sistem bertekanan/kelistrikan skala besar.',
+    items: ['TIA Portal', 'PLC', 'SCADA', 'Tuya eWeLink'],
+    bentoClass: 'bento-secondary',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>`
   },
 ];
@@ -39,19 +32,16 @@ const certs = [
 ];
 ---
 
-<section id="skills" class="section">
-  <div class="grid-line grid-line--h" style="top: 0;" aria-hidden="true"></div>
-
+<section id="skills" class="section border-top">
   <div class="container">
     <div class="skills-header reveal">
       <ChapterNumber number="04" label="Expertise & Credentials" />
     </div>
 
-    <!-- BENTO GRID -->
+    <!-- ASYMMETRIC BENTO GRID -->
     <div class="bento-grid reveal">
       {skills.map((skill) => (
         <div class={`bento-card ${skill.bentoClass}`}>
-          <!-- Background Abstract Icon Watermark -->
           <div class="bento-watermark" set:html={skill.icon} />
           
           <div class="bento-content">
@@ -81,10 +71,10 @@ const certs = [
             <div class="credential-ribbon"></div>
             <div class="credential-body">
               <h4 class="credential-name">{cert.name}</h4>
-              <span class="credential-issuer text-mono-sm">{cert.issuer}</span>
+              <span class="credential-issuer text-mono-sm text-secondary">{cert.issuer}</span>
             </div>
             <div class="credential-stamp">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
@@ -101,7 +91,7 @@ const certs = [
     margin-bottom: var(--space-8);
   }
 
-  /* ── Bento Grid ── */
+  /* ── Asymmetric Bento Grid ── */
   .bento-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -110,7 +100,12 @@ const certs = [
 
   @media (min-width: 768px) {
     .bento-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .bento-hero {
+      grid-row: span 2;
     }
   }
 
@@ -122,17 +117,17 @@ const certs = [
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 260px;
+    min-height: 240px;
+    border-radius: 4px;
     overflow: hidden;
-    transition: transform var(--duration-hover) var(--ease-editorial),
-                border-color var(--duration-hover) var(--ease-editorial),
-                box-shadow var(--duration-hover) var(--ease-editorial);
+    /* Strict design requirement: Hover border/bg change only, NO box-shadow */
+    transition: border-color var(--duration-hover) var(--ease-editorial),
+                background-color var(--duration-hover) var(--ease-editorial);
   }
 
   .bento-card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-text);
+    background-color: var(--color-bg);
   }
 
   /* Abstract Watermark Icon */
@@ -140,10 +135,10 @@ const certs = [
     position: absolute;
     bottom: -10%;
     right: -10%;
-    width: 60%;
-    height: 60%;
+    width: 50%;
+    height: 50%;
     color: var(--color-border);
-    opacity: 0.3;
+    opacity: 0.25;
     pointer-events: none;
     z-index: 0;
     transition: color var(--duration-hover) var(--ease-editorial),
@@ -151,9 +146,9 @@ const certs = [
   }
 
   .bento-card:hover .bento-watermark {
-    color: var(--color-accent);
-    opacity: 0.1;
-    transform: scale(1.1) rotate(-5deg);
+    color: var(--color-text);
+    opacity: 0.08;
+    transform: scale(1.05) rotate(-3deg);
   }
 
   .bento-watermark :global(svg) {
@@ -171,7 +166,7 @@ const certs = [
   .bento-icon {
     width: 2rem;
     height: 2rem;
-    color: var(--color-accent);
+    color: var(--color-text);
     margin-bottom: var(--space-4);
   }
 
@@ -183,16 +178,18 @@ const certs = [
 
   .bento-title {
     font-family: var(--font-headline);
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
     font-weight: 700;
     line-height: 1.2;
+    color: var(--color-text);
     margin-bottom: var(--space-3);
   }
 
   .bento-desc {
     color: var(--color-text-sec);
     line-height: 1.6;
-    max-width: 90%;
+    max-width: 95%;
+    font-size: 0.9375rem;
   }
 
   .bento-footer {
@@ -214,10 +211,10 @@ const certs = [
     background-color: var(--color-bg);
     border: 1px solid var(--color-border);
     padding: 0.25rem 0.625rem;
-    border-radius: 100px; /* pill shape for modern look */
+    border-radius: 100px;
   }
 
-  /* ── Certifications (Credential Badges) ── */
+  /* ── Certifications ── */
   .certs-section {
     margin-top: var(--space-12);
     padding-top: var(--space-8);
@@ -249,13 +246,15 @@ const certs = [
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     padding: var(--space-4) var(--space-5);
+    border-radius: 4px;
     overflow: hidden;
-    transition: transform var(--duration-hover) ease;
+    transition: border-color var(--duration-hover) ease,
+                background-color var(--duration-hover) ease;
   }
 
   .credential-badge:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-accent);
+    border-color: var(--color-text);
+    background-color: var(--color-bg);
   }
 
   .credential-ribbon {
@@ -263,8 +262,8 @@ const certs = [
     left: 0;
     top: 0;
     bottom: 0;
-    width: 4px;
-    background-color: var(--color-accent);
+    width: 3px;
+    background-color: var(--color-text);
   }
 
   .credential-body {
@@ -280,12 +279,8 @@ const certs = [
     font-weight: 700;
   }
 
-  .credential-issuer {
-    color: var(--color-text-sec);
-  }
-
   .credential-stamp {
-    color: var(--color-accent);
+    color: var(--color-text);
     opacity: 0.2;
     transition: opacity var(--duration-hover) ease;
   }

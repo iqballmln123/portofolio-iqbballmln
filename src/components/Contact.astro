@@ -2,31 +2,31 @@
 import ChapterNumber from './ChapterNumber.astro';
 ---
 
-<footer id="contact" class="section">
-  <div class="grid-line grid-line--h" style="top: 0;" aria-hidden="true"></div>
-
+<footer id="contact" class="section border-top">
   <div class="container">
     <div class="contact-layout">
       <div class="reveal">
-        <ChapterNumber number="06" label="Contact" />
+        <ChapterNumber number="07" label="Contact" />
       </div>
 
       <div class="contact-content reveal">
-        <h2 class="headline headline--hero contact-title">
-          Ready to create<br/><em>impact?</em>
+        <!-- Kinetic Typography Heading -->
+        <h2 class="headline headline--hero contact-title" id="kinetic-contact-title">
+          Ready to create<br/><em class="kinetic-skew">impact?</em>
         </h2>
         <p class="text-secondary contact-desc">
           Saya selalu terbuka untuk mendiskusikan peluang kerja, proyek kolaborasi, atau sekadar bertukar pikiran mengenai teknologi dan sistem.
         </p>
 
+        <!-- Magnetic Action Links -->
         <div class="contact-links">
-          <a href="mailto:iqballmaulana1233@gmail.com" class="contact-link" data-magnetic>
+          <a href="mailto:iqballmaulana1233@gmail.com" class="contact-link magnetic-btn" data-magnetic>
             <span class="link-label text-mono-sm text-secondary">Email</span>
             <span class="link-value">iqballmaulana1233@gmail.com</span>
             <span class="link-arrow">↗</span>
           </a>
 
-          <a href="https://www.linkedin.com/in/mochamad-iqbal-maulana-077045297/" target="_blank" rel="noopener noreferrer" class="contact-link" data-magnetic>
+          <a href="https://www.linkedin.com/in/mochamad-iqbal-maulana-077045297/" target="_blank" rel="noopener noreferrer" class="contact-link magnetic-btn" data-magnetic>
             <span class="link-label text-mono-sm text-secondary">LinkedIn</span>
             <span class="link-value">Mochamad Iqbal Maulana</span>
             <span class="link-arrow">↗</span>
@@ -56,14 +56,17 @@ import ChapterNumber from './ChapterNumber.astro';
   }
 
   .contact-title {
-    line-height: 1;
+    line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: var(--space-6);
+    will-change: transform;
   }
 
   .contact-title em {
     font-style: italic;
-    color: var(--color-accent);
+    color: var(--color-text);
+    display: inline-block;
+    will-change: transform;
   }
 
   .contact-desc {
@@ -88,17 +91,17 @@ import ChapterNumber from './ChapterNumber.astro';
     border-bottom: 1px solid var(--color-border);
     color: var(--color-text);
     text-decoration: none;
-    transition: color var(--duration-hover) var(--ease-editorial);
+    transition: border-color var(--duration-hover) var(--ease-editorial);
     position: relative;
+    will-change: transform;
   }
 
   .contact-link:hover {
-    color: var(--color-accent);
+    border-color: var(--color-text);
   }
 
   .contact-link:hover .link-arrow {
-    transform: translate(4px, -4px);
-    color: var(--color-accent);
+    transform: translate(6px, -6px);
   }
 
   .link-label {
@@ -116,8 +119,7 @@ import ChapterNumber from './ChapterNumber.astro';
   .link-arrow {
     font-size: 1.5rem;
     color: var(--color-text-sec);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                color var(--duration-hover) var(--ease-editorial);
+    transition: transform 0.4s var(--ease-out-expo);
   }
 
   .footer-bottom {
@@ -140,3 +142,88 @@ import ChapterNumber from './ChapterNumber.astro';
     }
   }
 </style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  document.addEventListener('DOMContentLoaded', initContactEffects);
+
+  function initContactEffects() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        isDesktop: '(min-width: 768px)',
+        reduceMotion: '(prefers-reduced-motion: reduce)',
+      },
+      (context) => {
+        const { reduceMotion, isDesktop } = context.conditions!;
+
+        // 1. Kinetic Typography on Scroll Velocity
+        const kineticEm = document.querySelector('.kinetic-skew');
+        if (kineticEm && !reduceMotion) {
+          let currentSkew = 0;
+
+          ScrollTrigger.create({
+            trigger: '#contact',
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const velocity = self.getVelocity();
+              const skew = gsap.utils.clamp(-12, 12, velocity / 150);
+              if (Math.abs(skew) > Math.abs(currentSkew)) {
+                currentSkew = skew;
+                gsap.to(kineticEm, {
+                  skewX: currentSkew,
+                  duration: 0.2,
+                  ease: 'power1.out',
+                  overwrite: 'auto',
+                  onComplete: () => {
+                    gsap.to(kineticEm, {
+                      skewX: 0,
+                      duration: 0.6,
+                      ease: 'power2.out',
+                    });
+                  },
+                });
+              }
+            },
+          });
+        }
+
+        // 2. Magnetic Button Effect
+        if (isDesktop && !reduceMotion) {
+          const magneticBtns = document.querySelectorAll('[data-magnetic]');
+          magneticBtns.forEach((btn) => {
+            const htmlBtn = btn as HTMLElement;
+
+            htmlBtn.addEventListener('mousemove', (e: MouseEvent) => {
+              const rect = htmlBtn.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+
+              gsap.to(htmlBtn, {
+                x: x * 0.2,
+                y: y * 0.25,
+                duration: 0.4,
+                ease: 'power2.out',
+              });
+            });
+
+            htmlBtn.addEventListener('mouseleave', () => {
+              gsap.to(htmlBtn, {
+                x: 0,
+                y: 0,
+                duration: 0.6,
+                ease: 'elastic.out(1, 0.4)',
+              });
+            });
+          });
+        }
+      }
+    );
+  }
+</script>

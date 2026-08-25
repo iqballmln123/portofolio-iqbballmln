@@ -1,41 +1,43 @@
 /* ──────────────────────────────────────────────────────────
-   Design Tokens — editorial/magazine system (10x overhaul)
-   Reference: design.md
+   Design Tokens — Off-white Warm Paper & Monochrome System
+   Reference: prompt-redesign-parallax-portofolio.md
    ────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Colors — Monochrome (Grey / White / Black) ── */
-  --color-bg:        #F7F7F7;   /* Light grey background */
-  --color-bg-alt:    #EEEEEE;   /* Slightly darker grey for alternating */
-  --color-surface:   #FFFFFF;   /* Card surfaces — pure white */
-  --color-text:      #111111;   /* Near-black for maximum readability */
-  --color-text-sec:  #6B6B6B;   /* Medium grey for secondary text */
-  --color-accent:    #178D68;   /* Green accent — kept for contrast pop */
-  --color-accent-light: rgba(23, 141, 104, 0.06);
-  --color-border:    #D9D9D9;   /* Neutral grey border */
-  --color-grid:      rgba(180, 180, 180, 0.35);
+  /* ── Colors — Warm Paper Monochrome (Off-white / Grey / Off-black) ── */
+  --color-bg:        #FAFAF7;   /* Off-white warm paper background */
+  --color-bg-alt:    #F2F1EC;   /* Slightly deeper warm grey for alt sections */
+  --color-surface:   #FFFFFF;   /* Card surfaces — pure white layer */
+  --color-text:      #0A0A0A;   /* Off-black for maximum readability */
+  --color-text-sec:  #6B6A63;   /* Medium warm grey for secondary text */
+  --color-text-muted:#8A8980;   /* Muted grey for metadata */
+  --color-accent:    #0A0A0A;   /* Monochrome accent — strong crisp off-black */
+  --color-accent-light: rgba(10, 10, 10, 0.05);
+  --color-border:    #E4E3DC;   /* Crisp paper border */
+  --color-border-alt:#DCD7CC;   /* Darker subtle border */
+  --color-grid:      rgba(10, 10, 10, 0.06);
 
-  /* ── Typography — three roles ── */
+  /* ── Typography ── */
   --font-headline: 'Fraunces', 'Georgia', serif;
   --font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono:     'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
 
-  /* ── Type scale (10x: dramatically larger hero) ── */
-  --text-hero:      clamp(3.5rem, 10vw, 8rem);       /* 56-128px — massive */
-  --text-hero-sub:  clamp(1.25rem, 2.5vw, 1.75rem);  /* 20-28px */
-  --text-section:   clamp(1.75rem, 4vw, 2.75rem);    /* 28-44px */
-  --text-pullquote: clamp(1.5rem, 3.5vw, 2.5rem);    /* 24-40px */
+  /* ── Type scale ── */
+  --text-hero:      clamp(3.5rem, 10vw, 8rem);
+  --text-hero-sub:  clamp(1.25rem, 2.5vw, 1.75rem);
+  --text-section:   clamp(1.75rem, 4vw, 2.75rem);
+  --text-pullquote: clamp(1.5rem, 3.5vw, 2.5rem);
   --text-body:      clamp(1rem, 1.125vw, 1.125rem);
   --text-meta:      0.8125rem;
   --text-meta-sm:   0.75rem;
 
-  --lh-hero:    0.95;  /* tighter for massive text */
+  --lh-hero:    0.95;
   --lh-section: 1.15;
   --lh-body:    1.7;
   --lh-meta:    1.5;
 
   --ls-mono:    0.08em;
-  --ls-wide:    0.15em;  /* extra wide for small labels */
+  --ls-wide:    0.15em;
 
   /* ── Spacing (8px base) ── */
   --space-1:   0.5rem;
@@ -51,10 +53,10 @@
   --space-24:  12rem;
 
   /* ── Layout ── */
-  --max-width:    1200px;
+  --max-width:      1200px;
   --max-width-wide: 1400px;
-  --grid-gap:     var(--space-6);
-  --section-gap:  var(--space-16);
+  --grid-gap:       var(--space-6);
+  --section-gap:    var(--space-16);
 
   /* ── Transitions ── */
   --ease-editorial: cubic-bezier(0.25, 0.1, 0.25, 1);
