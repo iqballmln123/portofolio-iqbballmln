@@ -77,6 +77,9 @@ const canonicalUrl = Astro.url.href;
     </style>
   </head>
   <body>
+    <!-- Top Scroll Progress Line -->
+    <div class="scroll-progress-bar" id="scroll-progress-bar" aria-hidden="true"></div>
+
     <!-- Ambient Background System -->
     <div class="ambient-bg" aria-hidden="true">
       <div class="ambient-grid"></div>
@@ -86,18 +89,50 @@ const canonicalUrl = Astro.url.href;
     <!-- Cursor Spotlight Overlay -->
     <div class="cursor-spotlight" id="cursor-spotlight" aria-hidden="true"></div>
 
+    <!-- Global Toast Notification Container -->
+    <div class="toast-notification" id="global-toast" role="status" aria-live="polite">
+      <span class="toast-dot"></span>
+      <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
     <Navbar />
     <slot />
 
-    <!-- GSAP Global Interactions -->
+    <!-- GSAP & Global Interaction Scripts -->
     <script>
       import { gsap } from 'gsap';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
       gsap.registerPlugin(ScrollTrigger);
 
+      // Global Toast Notification Handler
+      (window as any).showToast = function (message: string) {
+        const toast = document.getElementById('global-toast');
+        const toastMsg = document.getElementById('toast-message');
+        if (toast && toastMsg) {
+          toastMsg.textContent = message;
+          toast.classList.add('is-visible');
+          setTimeout(() => {
+            toast.classList.remove('is-visible');
+          }, 2800);
+        }
+      };
+
       document.addEventListener('DOMContentLoaded', () => {
         const mm = gsap.matchMedia();
+
+        // ──────────────────────────────────────────
+        // 1. Top Scroll Progress Indicator Tracker
+        // ──────────────────────────────────────────
+        const progressBar = document.getElementById('scroll-progress-bar');
+        if (progressBar) {
+          window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+          });
+        }
 
         mm.add(
           {
@@ -111,7 +146,7 @@ const canonicalUrl = Astro.url.href;
             const yOffset = reduceMotion ? 0 : 30;
 
             // ──────────────────────────────────────────
-            // 1. Spotlight Cursor Follow (Desktop)
+            // 2. Spotlight Cursor Follow (Desktop)
             // ──────────────────────────────────────────
             const spotlight = document.getElementById('cursor-spotlight');
             if (spotlight && isDesktop && !reduceMotion) {
@@ -133,7 +168,7 @@ const canonicalUrl = Astro.url.href;
             }
 
             // ──────────────────────────────────────────
-            // 2. Hero entrance stagger (UNTOUCHED 100%)
+            // 3. Hero entrance stagger (UNTOUCHED 100%)
             // ──────────────────────────────────────────
             const heroEls = document.querySelectorAll('#hero .reveal');
             if (heroEls.length) {
@@ -149,7 +184,7 @@ const canonicalUrl = Astro.url.href;
             }
 
             // ──────────────────────────────────────────
-            // 3. Batch reveal for all non-hero .reveal elements
+            // 4. Batch reveal for all non-hero .reveal elements
             // ──────────────────────────────────────────
             const otherReveals = document.querySelectorAll(
               '.reveal:not(#hero .reveal)'

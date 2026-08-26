@@ -5,8 +5,12 @@ import ChapterNumber from './ChapterNumber.astro';
 <footer id="contact" class="section border-top">
   <div class="container">
     <div class="contact-layout">
-      <div class="reveal">
-        <ChapterNumber number="07" label="Contact" />
+      <div class="reveal contact-header-row">
+        <ChapterNumber number="06" label="Contact" />
+        <div class="status-pill-badge live-work-pill">
+          <span class="status-dot"></span>
+          <span>Available for New Opportunities 2026</span>
+        </div>
       </div>
 
       <div class="contact-content reveal">
@@ -20,11 +24,11 @@ import ChapterNumber from './ChapterNumber.astro';
 
         <!-- Magnetic Action Links -->
         <div class="contact-links">
-          <a href="mailto:iqballmaulana1233@gmail.com" class="contact-link magnetic-btn" data-magnetic>
+          <button class="contact-link magnetic-btn copy-email-btn" id="copy-email-btn" data-magnetic aria-label="Copy Email Address">
             <span class="link-label text-mono-sm text-secondary">Email</span>
             <span class="link-value">iqballmaulana1233@gmail.com</span>
-            <span class="link-arrow">↗</span>
-          </a>
+            <span class="link-copy-badge text-mono-sm">Click to Copy 📋</span>
+          </button>
 
           <a href="https://www.linkedin.com/in/mochamad-iqbal-maulana-077045297/" target="_blank" rel="noopener noreferrer" class="contact-link magnetic-btn" data-magnetic>
             <span class="link-label text-mono-sm text-secondary">LinkedIn</span>
@@ -49,6 +53,19 @@ import ChapterNumber from './ChapterNumber.astro';
 <style>
   .contact-layout {
     margin-bottom: var(--space-16);
+  }
+
+  .contact-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .live-work-pill {
+    padding: 0.35rem 0.85rem;
   }
 
   .contact-content {
@@ -94,6 +111,13 @@ import ChapterNumber from './ChapterNumber.astro';
     transition: border-color var(--duration-hover) var(--ease-editorial);
     position: relative;
     will-change: transform;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
   }
 
   .contact-link:hover {
@@ -122,6 +146,21 @@ import ChapterNumber from './ChapterNumber.astro';
     transition: transform 0.4s var(--ease-out-expo);
   }
 
+  .link-copy-badge {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    background-color: var(--color-bg);
+    color: var(--color-text-sec);
+    transition: all 0.3s ease;
+  }
+
+  .contact-link:hover .link-copy-badge {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+
   .footer-bottom {
     padding-top: var(--space-4);
     padding-bottom: var(--space-8);
@@ -137,8 +176,8 @@ import ChapterNumber from './ChapterNumber.astro';
       gap: var(--space-2);
       padding: var(--space-4) 0;
     }
-    .link-arrow {
-      display: none;
+    .link-arrow, .link-copy-badge {
+      align-self: flex-start;
     }
   }
 </style>
@@ -151,6 +190,23 @@ import ChapterNumber from './ChapterNumber.astro';
 
   function initContactEffects() {
     gsap.registerPlugin(ScrollTrigger);
+
+    // Click to Copy Email Address Toast Handler
+    const copyBtn = document.getElementById('copy-email-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const email = 'iqballmaulana1233@gmail.com';
+        navigator.clipboard.writeText(email).then(() => {
+          if ((window as any).showToast) {
+            (window as any).showToast('Email address copied to clipboard!');
+          }
+        }).catch(() => {
+          if ((window as any).showToast) {
+            (window as any).showToast('Email: ' + email);
+          }
+        });
+      });
+    }
 
     const mm = gsap.matchMedia();
 

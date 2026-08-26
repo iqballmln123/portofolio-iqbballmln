@@ -4,6 +4,7 @@ import ChapterNumber from './ChapterNumber.astro';
 const skills = [
   {
     category: 'Mobile App Development & IoT',
+    metric: '3+ Years Experience',
     desc: 'Membangun aplikasi Android native berkinerja tinggi yang terhubung langsung dengan perangkat hardware & embedded systems secara real-time.',
     items: ['Kotlin', 'Jetpack Compose', 'ESP32', 'Firebase', 'Room', 'Retrofit', 'SIM800L'],
     bentoClass: 'bento-hero',
@@ -11,6 +12,7 @@ const skills = [
   },
   {
     category: 'Data & Automation',
+    metric: '100+ Ops Reports Generated',
     desc: 'Automasi alur kerja pelaporan enterprise yang mengolah data lapangan secara presisi.',
     items: ['Python', 'Streamlit', 'pandas', 'python-pptx'],
     bentoClass: 'bento-secondary',
@@ -18,6 +20,7 @@ const skills = [
   },
   {
     category: 'Industrial IoT & Otomasi',
+    metric: '5+ Multi-Sensor Hardware',
     desc: 'Standar otomasi industri dan kontrol sistem bertekanan/kelistrikan skala besar.',
     items: ['TIA Portal', 'PLC', 'SCADA', 'Tuya eWeLink'],
     bentoClass: 'bento-secondary',
@@ -45,7 +48,13 @@ const certs = [
           <div class="bento-watermark" set:html={skill.icon} />
           
           <div class="bento-content">
-            <div class="bento-icon" set:html={skill.icon} />
+            <div class="bento-top-meta">
+              <div class="bento-icon" set:html={skill.icon} />
+              <span class="status-pill-badge">
+                <span class="status-dot"></span>
+                <span>{skill.metric}</span>
+              </span>
+            </div>
             <h3 class="bento-title">{skill.category}</h3>
             <p class="bento-desc">{skill.desc}</p>
           </div>
@@ -70,7 +79,13 @@ const certs = [
           <div class="credential-badge">
             <div class="credential-ribbon"></div>
             <div class="credential-body">
-              <h4 class="credential-name">{cert.name}</h4>
+              <div class="cred-meta">
+                <h4 class="credential-name">{cert.name}</h4>
+                <span class="status-pill-badge">
+                  <span class="status-dot"></span>
+                  <span>Verified</span>
+                </span>
+              </div>
               <span class="credential-issuer text-mono-sm text-secondary">{cert.issuer}</span>
             </div>
             <div class="credential-stamp">
@@ -120,7 +135,6 @@ const certs = [
     min-height: 240px;
     border-radius: 4px;
     overflow: hidden;
-    /* Strict design requirement: Hover border/bg change only, NO box-shadow */
     transition: border-color var(--duration-hover) var(--ease-editorial),
                 background-color var(--duration-hover) var(--ease-editorial);
   }
@@ -163,11 +177,17 @@ const certs = [
     margin-bottom: var(--space-6);
   }
 
+  .bento-top-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
   .bento-icon {
     width: 2rem;
     height: 2rem;
     color: var(--color-text);
-    margin-bottom: var(--space-4);
   }
 
   .bento-icon :global(svg) {
@@ -273,9 +293,16 @@ const certs = [
     gap: 0.25rem;
   }
 
+  .cred-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
   .credential-name {
     font-family: var(--font-headline);
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 700;
   }
 

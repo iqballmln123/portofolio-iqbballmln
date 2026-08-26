@@ -7,6 +7,8 @@ const milestones = [
     year: '2023 - 2026',
     role: 'D3 Rekayasa Perangkat Lunak Aplikasi',
     company: 'Telkom University',
+    status: 'Completed',
+    statusDotClass: 'status-dot--completed',
     desc: 'Membangun dasar rekayasa perangkat lunak dengan fokus pada integrasi sistem end-to-end. Berawal dari pengembangan aplikasi Android native (Kotlin, Jetpack Compose), kemudian berekspansi ke ranah hardware/embedded systems (IoT, ESP32, sensor pintar).',
   },
   {
@@ -14,6 +16,8 @@ const milestones = [
     year: 'Feb - Jun 2026',
     role: 'Network & IoT Engineering Intern',
     company: 'Telkomsel Operations',
+    status: 'Handed Over',
+    statusDotClass: 'status-dot--completed',
     desc: 'Berperan di Divisi Network Operations. Merancang dan mengembangkan alat automasi pelaporan coverage jaringan seluler menggunakan Python dan Streamlit. Tools ini diserahterimakan dan secara aktif mempercepat alur kerja harian tim operasional lapangan.',
   },
   {
@@ -21,6 +25,8 @@ const milestones = [
     year: 'Present & Future',
     role: 'Menuju Industrial & Mining Automation',
     company: 'Next Step Enterprise',
+    status: 'Active Focus',
+    statusDotClass: 'status-dot',
     desc: 'Mengarahkan fokus pada skala enterprise yang lebih masif. Mempelajari dan mengeksplorasi infrastruktur otomasi industri kelas berat seperti TIA Portal, PLC, dan SCADA, untuk menjembatani inovasi software modern ke dalam sektor industri.',
   },
 ];
@@ -30,18 +36,21 @@ const pillars = [
     number: '01',
     title: 'Mobile App Engineering',
     tags: ['Kotlin', 'Jetpack Compose', 'MVVM'],
+    status: 'Primary Skill',
     desc: 'Pengembangan aplikasi Android native berkinerja tinggi dengan UI deklaratif, alur reaktif, dan arsitektur scalable.',
   },
   {
     number: '02',
     title: 'IoT & Embedded Systems',
     tags: ['ESP32', 'Sensors', 'Firebase', 'GSM'],
+    status: 'Hardware System',
     desc: 'Integrasi hardware multi-sensor (tanah, air, pH, TDS, kelistrikan) ke cloud dan aplikasi mobile secara real-time.',
   },
   {
     number: '03',
     title: 'Network & Automation',
     tags: ['Python', 'Streamlit', 'Telkomsel Ops'],
+    status: 'Enterprise Ops',
     desc: 'Automasi alur kerja pelaporan enterprise yang mempercepat pengolahan data lapangan untuk tim Network Operations.',
   },
 ];
@@ -82,6 +91,13 @@ const pillars = [
             
             <h4 class="pillar-title">{pillar.title}</h4>
             <p class="pillar-desc text-secondary">{pillar.desc}</p>
+
+            <div class="pillar-footer">
+              <span class="status-pill-badge">
+                <span class="status-dot"></span>
+                <span>{pillar.status}</span>
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -98,7 +114,13 @@ const pillars = [
             <div class="milestone-card-item">
               <div class="milestone-parallax-num" data-speed="0.8">{item.num}</div>
               <div class="milestone-content">
-                <span class="milestone-year text-mono-sm">{item.year}</span>
+                <div class="milestone-header-meta">
+                  <span class="milestone-year text-mono-sm">{item.year}</span>
+                  <span class="status-pill-badge">
+                    <span class={`status-dot ${item.statusDotClass}`}></span>
+                    <span>{item.status}</span>
+                  </span>
+                </div>
                 <h4 class="milestone-role">{item.role}</h4>
                 <span class="milestone-company">{item.company}</span>
                 <p class="milestone-desc text-secondary">{item.desc}</p>
@@ -247,6 +269,13 @@ const pillars = [
   .pillar-desc {
     font-size: 0.9375rem;
     line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .pillar-footer {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px dashed var(--color-border);
   }
 
   /* ── Milestones Pinned Horizontal Scroll ── */
@@ -300,13 +329,19 @@ const pillars = [
     z-index: 1;
   }
 
+  .milestone-header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+  }
+
   .milestone-year {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: 100px;
     color: var(--color-text-sec);
-    margin-bottom: var(--space-3);
     font-size: 0.75rem;
     background-color: var(--color-bg);
   }
