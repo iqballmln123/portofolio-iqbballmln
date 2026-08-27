@@ -15,10 +15,12 @@
     "@astrojs/check": "^0.9.10",
     "@astrojs/vercel": "^11.0.7",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/three": "^0.185.4",
     "astro": "^7.2.4",
     "embla-carousel": "^8.6.0",
     "gsap": "^3.15.0",
     "tailwindcss": "^4.3.3",
+    "three": "^0.185.1",
     "typescript": "^6.0.3",
     "vanilla-tilt": "^1.8.1"
   }
