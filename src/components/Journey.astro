@@ -492,20 +492,52 @@ const pillars = [
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+    if ('outputColorSpace' in renderer) {
+      (renderer as any).outputColorSpace = THREE.SRGBColorSpace;
+    }
 
-    // 2. Lighting Setup
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // 2. Lighting Setup (Bright Studio Lighting for Vivid Colors)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.0);
-    dirLight1.position.set(10, 15, 10);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5);
+    dirLight1.position.set(10, 20, 15);
     scene.add(dirLight1);
 
-    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.0);
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 1.5);
     dirLight2.position.set(-10, -10, -10);
     scene.add(dirLight2);
 
-    // 3. Load 3D GLB Model
+    const pointLight = new THREE.PointLight(0x00878f, 3.0, 20);
+    pointLight.position.set(0, 5, 5);
+    scene.add(pointLight);
+
+    // 3. Iconic Arduino Materials (Rich Vivid Blue PCB & Metallic accents)
+    const pcbBlueMaterial = new THREE.MeshStandardMaterial({
+      color: 0x00878f, // Iconic Arduino Blue/Teal (#00878F)
+      roughness: 0.35,
+      metalness: 0.15,
+    });
+
+    const darkChipMaterial = new THREE.MeshStandardMaterial({
+      color: 0x1c1d21, // Dark charcoal IC chips & female header sockets
+      roughness: 0.45,
+      metalness: 0.1,
+    });
+
+    const silverMetalMaterial = new THREE.MeshStandardMaterial({
+      color: 0xc8cbd0, // Silver USB port & crystal oscillator
+      roughness: 0.2,
+      metalness: 0.9,
+    });
+
+    const goldPinMaterial = new THREE.MeshStandardMaterial({
+      color: 0xe5c158, // Gold header pins
+      roughness: 0.3,
+      metalness: 0.8,
+    });
+
+    // 4. Load 3D GLB Model & Assign Vivid Materials
     let arduinoModel: THREE.Group | null = null;
     let targetRotationY = 0.4;
     let targetRotationX = 0.25;
@@ -516,6 +548,27 @@ const pillars = [
       '/models/arduino_uno.glb',
       (gltf) => {
         arduinoModel = gltf.scene;
+
+        // Traverse all meshes and assign rich Arduino color palette
+        arduinoModel.traverse((child) => {
+          if ((child as THREE.Mesh).isMesh) {
+            const mesh = child as THREE.Mesh;
+            const name = mesh.name.toLowerCase();
+            const matName = Array.isArray(mesh.material)
+              ? mesh.material.map((m) => m.name.toLowerCase()).join(' ')
+              : (mesh.material?.name || '').toLowerCase();
+
+            if (name.includes('usb') || matName.includes('usb')) {
+              mesh.material = silverMetalMaterial;
+            } else if (name.includes('pin') || name.includes('cylinder')) {
+              mesh.material = goldPinMaterial;
+            } else if (name.includes('chip') || name.includes('side') || name.includes('back')) {
+              mesh.material = darkChipMaterial;
+            } else {
+              mesh.material = pcbBlueMaterial;
+            }
+          }
+        });
 
         // Center geometry automatically
         const box = new THREE.Box3().setFromObject(arduinoModel);
@@ -562,7 +615,7 @@ const pillars = [
       }
     );
 
-    // 4. Mouse / Touch Interactions
+    // 5. Mouse / Touch Interactions
     wrapper.addEventListener('mousemove', (e: MouseEvent) => {
       const rect = wrapper.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -579,7 +632,7 @@ const pillars = [
       isMouseOver = false;
     });
 
-    // 5. Render Loop & Idle Sine Floating Animation
+    // 6. Render Loop & Idle Sine Floating Animation
     let clock = new THREE.Clock();
 
     function animate() {
@@ -604,7 +657,7 @@ const pillars = [
 
     animate();
 
-    // 6. Responsive Resize Handler
+    // 7. Responsive Resize Handler
     window.addEventListener('resize', () => {
       if (!wrapper) return;
       camera.aspect = wrapper.clientWidth / wrapper.clientHeight;
