@@ -1,285 +1,120 @@
 ---
 import ChapterNumber from './ChapterNumber.astro';
 ---
-
-<footer id="contact" class="section border-top">
+<section id="contact" class="section border-top">
   <div class="container">
-    <div class="contact-layout">
-      <div class="reveal contact-header-row">
-        <ChapterNumber number="06" label="Contact" />
-        <div class="status-pill-badge live-work-pill">
-          <span class="status-dot"></span>
-          <span>Available for New Opportunities 2026</span>
-        </div>
-      </div>
-
-      <div class="contact-content reveal">
-        <!-- Kinetic Typography Heading -->
-        <h2 class="headline headline--hero contact-title" id="kinetic-contact-title">
-          Ready to create<br/><em class="kinetic-skew">impact?</em>
-        </h2>
-        <p class="text-secondary contact-desc">
-          Saya selalu terbuka untuk mendiskusikan peluang kerja, proyek kolaborasi, atau sekadar bertukar pikiran mengenai teknologi dan sistem.
-        </p>
-
-        <!-- Magnetic Action Links -->
-        <div class="contact-links">
-          <button class="contact-link magnetic-btn copy-email-btn" id="copy-email-btn" data-magnetic aria-label="Copy Email Address">
-            <span class="link-label text-mono-sm text-secondary">Email</span>
-            <span class="link-value">iqballmaulana1233@gmail.com</span>
-            <span class="link-copy-badge text-mono-sm">Click to Copy 📋</span>
-          </button>
-
-          <a href="https://www.linkedin.com/in/mochamad-iqbal-maulana-077045297/" target="_blank" rel="noopener noreferrer" class="contact-link magnetic-btn" data-magnetic>
-            <span class="link-label text-mono-sm text-secondary">LinkedIn</span>
-            <span class="link-value">Mochamad Iqbal Maulana</span>
-            <span class="link-arrow">↗</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom reveal">
-      <p class="text-mono-sm text-secondary">
-        DIRANCANG & DIBANGUN OLEH IQBAL — 2026.
+    <div class="contact-header reveal">
+      <ChapterNumber number="06" label="Get In Touch" />
+      <p class="text-secondary" style="margin-top: var(--space-2); max-width: 32rem;">
+        Saya terbuka untuk kolaborasi, proyek baru, atau sekedar berbincang tentang teknologi.
       </p>
-      <span class="text-mono-sm text-secondary">
-        EOF
-      </span>
     </div>
+
+    <form class="contact-form" netlify netlify-honeypot="bot-field" name="contact" method="POST">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden" aria-hidden="true">
+        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+      </p>
+      <div class="form-grid">
+        <input class="form-input" type="text" name="name" placeholder="Nama Anda" required />
+        <input class="form-input" type="email" name="email" placeholder="Email Anda" required />
+        <textarea class="form-textarea" name="message" rows="4" placeholder="Pesan..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary btn-submit">
+        Kirim Pesan
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </form>
   </div>
-</footer>
+</section>
 
 <style>
-  .contact-layout {
-    margin-bottom: var(--space-16);
+  .contact-header {
+    margin-bottom: var(--space-8);
   }
 
-  .contact-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: var(--space-4);
-  }
-
-  .live-work-pill {
-    padding: 0.35rem 0.85rem;
-  }
-
-  .contact-content {
-    margin-top: var(--space-8);
-  }
-
-  .contact-title {
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--space-6);
-    will-change: transform;
-  }
-
-  .contact-title em {
-    font-style: italic;
-    color: var(--color-text);
-    display: inline-block;
-    will-change: transform;
-  }
-
-  .contact-desc {
-    max-width: 32rem;
-    font-size: 1.125rem;
-    line-height: 1.6;
-    margin-bottom: var(--space-10);
-  }
-
-  .contact-links {
+  .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    border-top: 1px solid var(--color-border);
+    gap: var(--space-6);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    padding: var(--space-8);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--duration-lift) var(--ease-out-expo),
+                transform var(--duration-lift) var(--ease-out-expo);
   }
 
-  .contact-link {
-    display: flex;
-    align-items: center;
+  .contact-form:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+  }
+
+  .form-grid {
+    display: grid;
     gap: var(--space-4);
-    padding: var(--space-6) 0;
-    border-bottom: 1px solid var(--color-border);
-    color: var(--color-text);
-    text-decoration: none;
-    transition: border-color var(--duration-hover) var(--ease-editorial);
-    position: relative;
-    will-change: transform;
-    background: none;
-    border-left: none;
-    border-right: none;
-    border-top: none;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 600px) {
+    .form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    textarea.form-textarea { grid-column: span 2; }
+  }
+
+  .form-input,
+  .form-textarea {
     width: 100%;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .contact-link:hover {
-    border-color: var(--color-text);
-  }
-
-  .contact-link:hover .link-arrow {
-    transform: translate(6px, -6px);
-  }
-
-  .link-label {
-    min-width: 6rem;
-    flex-shrink: 0;
-  }
-
-  .link-value {
-    font-family: var(--font-headline);
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    font-weight: 700;
-    flex: 1;
-  }
-
-  .link-arrow {
-    font-size: 1.5rem;
-    color: var(--color-text-sec);
-    transition: transform 0.4s var(--ease-out-expo);
-  }
-
-  .link-copy-badge {
-    padding: 0.35rem 0.75rem;
+    padding: var(--space-3) var(--space-4);
     border: 1px solid var(--color-border);
-    border-radius: 100px;
-    background-color: var(--color-bg);
-    color: var(--color-text-sec);
-    transition: all 0.3s ease;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.85);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    transition: border-color var(--duration-hover) var(--ease-editorial),
+                box-shadow var(--duration-hover) var(--ease-out-expo);
   }
 
-  .contact-link:hover .link-copy-badge {
-    background-color: var(--color-text);
-    color: var(--color-bg);
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
     border-color: var(--color-text);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
   }
 
-  .footer-bottom {
-    padding-top: var(--space-4);
-    padding-bottom: var(--space-8);
-    display: flex;
-    justify-content: space-between;
+  .btn-primary {
+    align-self: flex-start;
+    display: inline-flex;
     align-items: center;
+    gap: var(--space-2);
+    background: var(--color-primary);
+    color: var(--color-bg);
+    padding: var(--space-3) var(--space-5);
+    border: none;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--duration-hover) var(--ease-editorial),
+                transform var(--duration-lift) var(--ease-out-expo);
   }
 
-  @media (max-width: 767px) {
-    .contact-link {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-2);
-      padding: var(--space-4) 0;
-    }
-    .link-arrow, .link-copy-badge {
-      align-self: flex-start;
-    }
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-icon {
+    width: 1rem;
+    height: 1rem;
+    stroke-width: 2;
+    transition: transform var(--duration-hover) var(--ease-out-expo);
+  }
+
+  .btn-primary:hover .btn-icon {
+    transform: translateX(4px);
   }
 </style>
-
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  document.addEventListener('DOMContentLoaded', initContactEffects);
-
-  function initContactEffects() {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Click to Copy Email Address Toast Handler
-    const copyBtn = document.getElementById('copy-email-btn');
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        const email = 'iqballmaulana1233@gmail.com';
-        navigator.clipboard.writeText(email).then(() => {
-          if ((window as any).showToast) {
-            (window as any).showToast('Email address copied to clipboard!');
-          }
-        }).catch(() => {
-          if ((window as any).showToast) {
-            (window as any).showToast('Email: ' + email);
-          }
-        });
-      });
-    }
-
-    const mm = gsap.matchMedia();
-
-    mm.add(
-      {
-        isDesktop: '(min-width: 768px)',
-        reduceMotion: '(prefers-reduced-motion: reduce)',
-      },
-      (context) => {
-        const { reduceMotion, isDesktop } = context.conditions!;
-
-        // 1. Kinetic Typography on Scroll Velocity
-        const kineticEm = document.querySelector('.kinetic-skew');
-        if (kineticEm && !reduceMotion) {
-          let currentSkew = 0;
-
-          ScrollTrigger.create({
-            trigger: '#contact',
-            start: 'top bottom',
-            end: 'bottom top',
-            onUpdate: (self) => {
-              const velocity = self.getVelocity();
-              const skew = gsap.utils.clamp(-12, 12, velocity / 150);
-              if (Math.abs(skew) > Math.abs(currentSkew)) {
-                currentSkew = skew;
-                gsap.to(kineticEm, {
-                  skewX: currentSkew,
-                  duration: 0.2,
-                  ease: 'power1.out',
-                  overwrite: 'auto',
-                  onComplete: () => {
-                    gsap.to(kineticEm, {
-                      skewX: 0,
-                      duration: 0.6,
-                      ease: 'power2.out',
-                    });
-                  },
-                });
-              }
-            },
-          });
-        }
-
-        // 2. Magnetic Button Effect
-        if (isDesktop && !reduceMotion) {
-          const magneticBtns = document.querySelectorAll('[data-magnetic]');
-          magneticBtns.forEach((btn) => {
-            const htmlBtn = btn as HTMLElement;
-
-            htmlBtn.addEventListener('mousemove', (e: MouseEvent) => {
-              const rect = htmlBtn.getBoundingClientRect();
-              const x = e.clientX - rect.left - rect.width / 2;
-              const y = e.clientY - rect.top - rect.height / 2;
-
-              gsap.to(htmlBtn, {
-                x: x * 0.2,
-                y: y * 0.25,
-                duration: 0.4,
-                ease: 'power2.out',
-              });
-            });
-
-            htmlBtn.addEventListener('mouseleave', () => {
-              gsap.to(htmlBtn, {
-                x: 0,
-                y: 0,
-                duration: 0.6,
-                ease: 'elastic.out(1, 0.4)',
-              });
-            });
-          });
-        }
-      }
-    );
-  }
-</script>

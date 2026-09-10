@@ -143,22 +143,46 @@ const projects: ArchiveProject[] = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-3) 0;
+    padding: var(--space-4) var(--space-2);
+    margin-inline: calc(var(--space-2) * -1);
     cursor: pointer;
     list-style: none;
     user-select: none;
-    transition: background-color var(--duration-hover) var(--ease-editorial);
+    border-radius: var(--radius-card);
+    position: relative;
+    transition: background-color var(--duration-hover) var(--ease-smooth),
+                box-shadow var(--duration-hover) var(--ease-smooth);
   }
 
   .archive-summary::-webkit-details-marker {
     display: none;
   }
 
-  .archive-summary:hover {
-    background-color: var(--color-accent-light);
-    padding-inline: var(--space-2);
-    margin-inline: calc(var(--space-2) * -1);
+  /* Left accent bar on hover */
+  .archive-summary::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background-color: var(--color-text);
     border-radius: 2px;
+    transition: height 0.3s var(--ease-out-expo);
+  }
+
+  .archive-summary:hover {
+    background-color: rgba(10, 10, 10, 0.02);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .archive-summary:hover::before {
+    height: 60%;
+  }
+
+  details[open] .archive-summary::before {
+    height: 80%;
   }
 
   .archive-summary-left {
@@ -172,8 +196,16 @@ const projects: ArchiveProject[] = [
     height: 48px;
     overflow: hidden;
     border: 1px solid var(--color-border);
+    border-radius: 4px;
     background-color: #E8E4DC;
     flex-shrink: 0;
+    transition: transform var(--duration-hover) var(--ease-out-expo),
+                box-shadow var(--duration-hover) var(--ease-smooth);
+  }
+
+  .archive-summary:hover .archive-preview-img {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
   }
 
   .archive-preview-img img {
@@ -201,19 +233,47 @@ const projects: ArchiveProject[] = [
     font-size: 1.25rem;
     color: var(--color-accent);
     flex-shrink: 0;
-    transition: transform var(--duration-hover) var(--ease-out-expo);
-    width: 1.5rem;
-    text-align: center;
+    transition: transform 0.4s var(--ease-spring);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+  }
+
+  .archive-summary:hover .archive-toggle {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
   }
 
   details[open] .archive-toggle {
     transform: rotate(45deg);
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
   }
 
   /* ── Expanded detail ── */
   .archive-detail {
     padding-bottom: var(--space-6);
     padding-top: var(--space-2);
+    padding-inline: var(--space-2);
+    animation: slideDown 0.3s var(--ease-out-expo);
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .archive-desc {
@@ -231,7 +291,15 @@ const projects: ArchiveProject[] = [
   .archive-ss-item {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
     overflow: hidden;
+    transition: box-shadow var(--duration-hover) var(--ease-smooth),
+                transform var(--duration-hover) var(--ease-out-expo);
+  }
+
+  .archive-ss-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .archive-ss-item img {
@@ -240,11 +308,19 @@ const projects: ArchiveProject[] = [
     object-fit: cover;
     object-position: top center;
     display: block;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  .archive-ss-item:hover img {
+    transform: scale(1.03);
   }
 
   .archive-ss-item .img-caption {
     padding: 0.375rem 0.5rem;
     border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-sec);
   }
 
   @media (min-width: 768px) {

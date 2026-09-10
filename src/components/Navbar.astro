@@ -14,7 +14,7 @@ const navItems = [
       <li>
         <a href={item.href} class="nav-link" data-nav-target={item.href.substring(1)}>
           <span class="nav-text">{item.label}</span>
-          <span class="nav-dot"></span>
+          <span class="nav-line"></span>
         </a>
       </li>
     ))}
@@ -28,14 +28,27 @@ const navItems = [
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-    background: rgba(244, 241, 234, 0.7); /* Translucent --color-bg */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(200, 196, 186, 0.5); /* Soft border */
-    border-radius: 100px;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur-heavy));
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-pill);
     padding: 0.5rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.5s var(--ease-out-expo),
+                opacity 0.5s ease,
+                box-shadow var(--duration-hover) var(--ease-smooth);
+    will-change: transform;
+  }
+
+  .floating-nav:hover {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .floating-nav.nav-hidden {
+    transform: translateX(-50%) translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .nav-list {
@@ -51,44 +64,50 @@ const navItems = [
     align-items: center;
     justify-content: center;
     padding: 0.625rem 1.25rem;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     color: var(--color-text-sec);
     font-family: var(--font-mono);
     font-size: var(--text-meta-sm);
     text-transform: uppercase;
     letter-spacing: var(--ls-mono);
-    transition: color var(--duration-hover) var(--ease-editorial), background-color var(--duration-hover);
-    /* For magnetic hover */
+    transition: color var(--duration-hover) var(--ease-editorial),
+                background-color var(--duration-hover) var(--ease-smooth);
     will-change: transform;
   }
 
   .nav-link:hover {
     color: var(--color-text);
-    background-color: var(--color-surface);
+    background-color: rgba(10, 10, 10, 0.04);
   }
 
   .nav-link.active {
-    color: var(--color-accent);
-    /* background-color: var(--color-surface); */
+    color: var(--color-text);
   }
 
-  .nav-dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: var(--color-accent);
+  /* Active indicator line (replaces dot for premium feel) */
+  .nav-line {
+    width: 0;
+    height: 1.5px;
+    background-color: var(--color-text);
     position: absolute;
-    bottom: 4px;
-    opacity: 0;
-    transform: scale(0);
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    bottom: 6px;
+    border-radius: 1px;
+    transition: width 0.4s var(--ease-out-expo);
   }
 
-  .nav-link.active .nav-dot {
-    opacity: 1;
-    transform: scale(1);
+  .nav-link.active .nav-line {
+    width: 16px;
   }
 
+  .nav-link:hover .nav-line {
+    width: 10px;
+    background-color: var(--color-text-sec);
+  }
+
+  .nav-link.active:hover .nav-line {
+    width: 16px;
+    background-color: var(--color-text);
+  }
 
   @media (max-width: 768px) {
     .floating-nav {
@@ -110,6 +129,7 @@ const navItems = [
 
 <script>
   import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   class FloatingNav {
     nav: HTMLElement | null;
@@ -129,10 +149,12 @@ const navItems = [
     }
 
     init() {
+      gsap.registerPlugin(ScrollTrigger);
+
       // 1. ScrollSpy for Active states
       const observerOptions = {
         root: null,
-        rootMargin: '-40% 0px -60% 0px', // Trigger when section is in the middle
+        rootMargin: '-40% 0px -60% 0px',
         threshold: 0
       };
 
@@ -146,7 +168,32 @@ const navItems = [
 
       this.sections.forEach(section => observer.observe(section));
 
-      // 2. Magnetic Effect (Desktop only)
+      // 2. Auto-hide on scroll down, show on scroll up
+      if (this.nav) {
+        const navEl = this.nav;
+        let lastScrollY = 0;
+
+        ScrollTrigger.create({
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (self) => {
+            const currentScrollY = window.scrollY;
+            const direction = self.direction; // 1 = down, -1 = up
+
+            // Only hide after scrolling past hero (300px threshold)
+            if (currentScrollY > 300 && direction === 1) {
+              navEl.classList.add('nav-hidden');
+            } else {
+              navEl.classList.remove('nav-hidden');
+            }
+
+            lastScrollY = currentScrollY;
+          }
+        });
+      }
+
+      // 3. Magnetic Effect (Desktop only)
       if (window.matchMedia('(min-width: 768px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         this.links.forEach(link => {
           link.addEventListener('mousemove', (e) => this.magneticHover(e, link));
@@ -171,7 +218,7 @@ const navItems = [
       const y = e.clientY - rect.top - rect.height / 2;
 
       gsap.to(el, {
-        x: x * 0.3, // Strength of the pull
+        x: x * 0.3,
         y: y * 0.3,
         duration: 0.4,
         ease: 'power2.out',

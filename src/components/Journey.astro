@@ -208,7 +208,9 @@ const pillars = [
     top: 0.25rem;
     bottom: 0.25rem;
     width: 3px;
-    background-color: var(--color-text);
+    background: linear-gradient(to bottom, var(--color-text), var(--color-text-sec));
+    border-radius: 2px;
+    transform-origin: top;
   }
 
   .about-narrative {
@@ -217,17 +219,26 @@ const pillars = [
     line-height: var(--lh-body);
   }
 
-  /* ── 3D Arduino Stage Card ── */
+  /* ── 3D Arduino Stage Card — Glassmorphism ── */
   .arduino-stage-card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
     padding: var(--space-4);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 16px 36px rgba(10, 10, 10, 0.04);
+    box-shadow: var(--shadow-lg);
     position: relative;
     overflow: hidden;
+    transition: box-shadow var(--duration-lift) var(--ease-out-expo),
+                transform var(--duration-lift) var(--ease-out-expo);
+  }
+
+  .arduino-stage-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
   }
 
   .stage-header {
@@ -235,7 +246,7 @@ const pillars = [
     align-items: center;
     justify-content: space-between;
     padding-bottom: var(--space-3);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid rgba(10, 10, 10, 0.06);
   }
 
   .stage-tag {
@@ -250,7 +261,7 @@ const pillars = [
     align-items: center;
     justify-content: center;
     background: radial-gradient(circle at center, #F5F4EE 0%, var(--color-bg) 100%);
-    border-radius: 4px;
+    border-radius: var(--radius-card);
     margin-block: var(--space-3);
     cursor: grab;
   }
@@ -268,10 +279,10 @@ const pillars = [
   .stage-footer {
     text-align: center;
     padding-top: var(--space-2);
-    border-top: 1px dashed var(--color-border);
+    border-top: 1px dashed rgba(10, 10, 10, 0.08);
   }
 
-  /* ── Pillars Grid ── */
+  /* ── Pillars Grid — Glassmorphism Cards ── */
   .pillars-section {
     margin-bottom: var(--space-16);
   }
@@ -297,20 +308,25 @@ const pillars = [
   }
 
   .pillar-card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     padding: var(--space-6);
-    border-radius: 4px;
+    border-radius: var(--radius-card);
     display: flex;
     flex-direction: column;
     height: 100%;
+    box-shadow: var(--shadow-sm);
     transition: border-color var(--duration-hover) var(--ease-editorial),
-                transform var(--duration-hover) var(--ease-editorial);
+                transform var(--duration-lift) var(--ease-out-expo),
+                box-shadow var(--duration-lift) var(--ease-out-expo);
   }
 
   .pillar-card:hover {
-    border-color: var(--color-text);
-    transform: translateY(-4px);
+    border-color: rgba(10, 10, 10, 0.2);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
   }
 
   .pillar-top-row {
@@ -329,7 +345,14 @@ const pillars = [
     background-color: var(--color-bg);
     border: 1px solid var(--color-border);
     padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+    border-radius: var(--radius-card);
+    transition: background-color var(--duration-hover) var(--ease-smooth),
+                color var(--duration-hover) var(--ease-smooth);
+  }
+
+  .pillar-card:hover .pillar-num-badge {
+    background-color: var(--color-text);
+    color: var(--color-bg);
   }
 
   .pillar-tag-list {
@@ -342,11 +365,20 @@ const pillars = [
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--color-text-sec);
-    background-color: var(--color-bg);
+    background-color: rgba(10, 10, 10, 0.03);
     border: 1px solid var(--color-border);
     padding: 0.2rem 0.55rem;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     line-height: 1.4;
+    transition: background-color var(--duration-hover) var(--ease-smooth),
+                color var(--duration-hover) var(--ease-smooth),
+                border-color var(--duration-hover) var(--ease-smooth);
+  }
+
+  .pillar-tag-pill:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
   }
 
   .pillar-title {
@@ -367,10 +399,10 @@ const pillars = [
   .pillar-footer {
     margin-top: auto;
     padding-top: var(--space-3);
-    border-top: 1px dashed var(--color-border);
+    border-top: 1px dashed rgba(10, 10, 10, 0.08);
   }
 
-  /* ── Milestones Pinned Horizontal Scroll ── */
+  /* ── Milestones Pinned Horizontal Scroll — Enhanced ── */
   .timeline-section {
     overflow: hidden;
   }
@@ -389,12 +421,24 @@ const pillars = [
   .milestone-card-item {
     position: relative;
     width: 320px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     padding: var(--space-6);
-    border-radius: 4px;
+    border-radius: var(--radius-card);
     flex-shrink: 0;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--duration-lift) var(--ease-out-expo),
+                transform var(--duration-lift) var(--ease-out-expo),
+                border-color var(--duration-hover) var(--ease-editorial);
+  }
+
+  .milestone-card-item:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: rgba(10, 10, 10, 0.15);
   }
 
   @media (min-width: 768px) {
@@ -414,6 +458,11 @@ const pillars = [
     line-height: 1;
     pointer-events: none;
     user-select: none;
+    transition: color var(--duration-lift) var(--ease-smooth);
+  }
+
+  .milestone-card-item:hover .milestone-parallax-num {
+    color: rgba(10, 10, 10, 0.07);
   }
 
   .milestone-content {
@@ -432,10 +481,15 @@ const pillars = [
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border: 1px solid var(--color-border);
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     color: var(--color-text-sec);
     font-size: 0.75rem;
-    background-color: var(--color-bg);
+    background-color: rgba(10, 10, 10, 0.02);
+    transition: background-color var(--duration-hover) var(--ease-smooth);
+  }
+
+  .milestone-card-item:hover .milestone-year {
+    background-color: rgba(10, 10, 10, 0.05);
   }
 
   .milestone-role {

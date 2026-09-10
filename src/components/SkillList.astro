@@ -106,7 +106,7 @@ const certs = [
     margin-bottom: var(--space-8);
   }
 
-  /* ── Asymmetric Bento Grid ── */
+  /* ── Asymmetric Bento Grid — Glassmorphism ── */
   .bento-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -126,22 +126,27 @@ const certs = [
 
   .bento-card {
     position: relative;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     min-height: 240px;
-    border-radius: 4px;
+    border-radius: var(--radius-card);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
     transition: border-color var(--duration-hover) var(--ease-editorial),
-                background-color var(--duration-hover) var(--ease-editorial);
+                box-shadow var(--duration-lift) var(--ease-out-expo),
+                transform var(--duration-lift) var(--ease-out-expo);
   }
 
   .bento-card:hover {
-    border-color: var(--color-text);
-    background-color: var(--color-bg);
+    border-color: rgba(10, 10, 10, 0.2);
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-6px);
   }
 
   /* Abstract Watermark Icon */
@@ -156,13 +161,14 @@ const certs = [
     pointer-events: none;
     z-index: 0;
     transition: color var(--duration-hover) var(--ease-editorial),
-                transform var(--duration-hover) var(--ease-editorial);
+                transform var(--duration-lift) var(--ease-out-expo),
+                opacity var(--duration-hover) var(--ease-editorial);
   }
 
   .bento-card:hover .bento-watermark {
     color: var(--color-text);
-    opacity: 0.08;
-    transform: scale(1.05) rotate(-3deg);
+    opacity: 0.06;
+    transform: scale(1.08) rotate(-5deg);
   }
 
   .bento-watermark :global(svg) {
@@ -188,6 +194,11 @@ const certs = [
     width: 2rem;
     height: 2rem;
     color: var(--color-text);
+    transition: transform var(--duration-hover) var(--ease-spring);
+  }
+
+  .bento-card:hover .bento-icon {
+    transform: scale(1.1);
   }
 
   .bento-icon :global(svg) {
@@ -228,13 +239,22 @@ const certs = [
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background-color: rgba(10, 10, 10, 0.03);
     border: 1px solid var(--color-border);
     padding: 0.25rem 0.625rem;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
+    transition: background-color var(--duration-hover) var(--ease-smooth),
+                color var(--duration-hover) var(--ease-smooth),
+                border-color var(--duration-hover) var(--ease-smooth);
   }
 
-  /* ── Certifications ── */
+  .bento-tag:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    border-color: var(--color-text);
+  }
+
+  /* ── Certifications — Glassmorphism ── */
   .certs-section {
     margin-top: var(--space-12);
     padding-top: var(--space-8);
@@ -263,18 +283,23 @@ const certs = [
     position: relative;
     display: flex;
     align-items: center;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
     padding: var(--space-4) var(--space-5);
-    border-radius: 4px;
+    border-radius: var(--radius-card);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
     transition: border-color var(--duration-hover) ease,
-                background-color var(--duration-hover) ease;
+                box-shadow var(--duration-lift) var(--ease-out-expo),
+                transform var(--duration-lift) var(--ease-out-expo);
   }
 
   .credential-badge:hover {
-    border-color: var(--color-text);
-    background-color: var(--color-bg);
+    border-color: rgba(10, 10, 10, 0.2);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
   }
 
   .credential-ribbon {
@@ -283,7 +308,13 @@ const certs = [
     top: 0;
     bottom: 0;
     width: 3px;
-    background-color: var(--color-text);
+    background: linear-gradient(to bottom, var(--color-text), var(--color-text-sec));
+    border-radius: 0 2px 2px 0;
+    transition: width var(--duration-hover) var(--ease-out-expo);
+  }
+
+  .credential-badge:hover .credential-ribbon {
+    width: 4px;
   }
 
   .credential-body {
@@ -308,11 +339,13 @@ const certs = [
 
   .credential-stamp {
     color: var(--color-text);
-    opacity: 0.2;
-    transition: opacity var(--duration-hover) ease;
+    opacity: 0.15;
+    transition: opacity var(--duration-hover) ease,
+                transform var(--duration-hover) var(--ease-spring);
   }
 
   .credential-badge:hover .credential-stamp {
     opacity: 1;
+    transform: scale(1.1);
   }
 </style>

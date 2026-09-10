@@ -150,7 +150,6 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     padding-top: var(--space-8);
   }
 
-  /* ── Top Bar with Back Button ── */
   .top-nav-bar {
     position: sticky;
     top: 1.5rem;
@@ -162,31 +161,21 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: rgba(var(--color-surface-rgb), 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 0.5rem 1rem;
     border-radius: 100px;
     color: var(--color-text);
     text-decoration: none;
-    transition: all 0.3s var(--ease-editorial);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .back-btn:hover {
-    background-color: var(--color-text);
+    background: var(--color-text);
     color: var(--color-bg);
-    border-color: var(--color-text);
   }
 
-  .back-arrow {
-    transition: transform 0.3s ease;
-  }
-
-  .back-btn:hover .back-arrow {
-    transform: translateX(-3px);
-  }
-
-  /* ── Header ── */
   .project-detail-header {
     margin-bottom: var(--space-10);
     max-width: 56rem;
@@ -199,268 +188,46 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     margin-bottom: var(--space-4);
   }
 
-  .project-detail-tagline {
-    font-size: clamp(1.125rem, 2vw, 1.375rem);
-    line-height: 1.6;
-    margin-bottom: var(--space-6);
-  }
-
-  .project-detail-tools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .tool-tag {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    color: var(--color-text);
-  }
-
-  /* ── Premium macOS Device Window Frame Gallery ── */
-  .project-detail-gallery {
-    margin-bottom: var(--space-16);
-  }
-
   .device-window-frame {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+    background: rgba(var(--color-surface-rgb), 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 20px 48px rgba(10, 10, 10, 0.06);
-    display: flex;
-    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
 
-  /* Window Header Bar (macOS Dots & Title) */
   .window-header-bar {
+    background: rgba(var(--color-bg-rgb), 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.75rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
   }
-
-  .window-dots {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-  .dot--red { background-color: #FF5F56; }
-  .dot--yellow { background-color: #FFBD2E; }
-  .dot--green { background-color: #27C93F; }
 
   .window-url {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: rgba(0, 0, 0, 0.05);
     padding: 0.2rem 1rem;
     border-radius: 100px;
     color: var(--color-text-sec);
-    font-size: 0.75rem;
-  }
-
-  .window-counter {
-    color: var(--color-text);
-    font-weight: 500;
-  }
-
-  /* Main Viewport & Slide Stage */
-  .embla__viewport {
-    overflow: hidden;
-  }
-
-  .embla__container {
-    display: flex;
-  }
-
-  .embla__slide {
-    flex: 0 0 100%;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
   }
 
   .slide-inner {
     height: 480px;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle at center, #F5F4EE 0%, var(--color-bg-alt) 100%);
     padding: var(--space-6);
-    position: relative;
-  }
-
-  @media (min-width: 768px) {
-    .slide-inner {
-      height: 580px;
-      padding: var(--space-8);
-    }
-  }
-
-  .image-stage {
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.12));
-  }
-
-  .showcase-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 4px;
-    transition: transform 0.4s var(--ease-out-expo);
-  }
-
-  .slide-caption-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .caption-num {
-    color: var(--color-text-sec);
-    padding: 0.15rem 0.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-
-  .img-caption {
-    color: var(--color-text);
-  }
-
-  /* Navigation Toolbar & Thumbnails Strip */
-  .window-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    background-color: var(--color-bg);
-    border-top: 1px solid var(--color-border);
-    gap: 1rem;
-  }
-
-  .nav-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    color: var(--color-text);
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  .nav-btn:hover {
-    background-color: var(--color-text);
-    color: var(--color-bg);
-    border-color: var(--color-text);
-  }
-
-  .thumbnails-strip {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    overflow-x: auto;
-    padding-block: 0.25rem;
-    scroll-behavior: smooth;
-  }
-
-  .thumb-btn {
-    width: 54px;
-    height: 36px;
-    border-radius: 4px;
-    border: 1.5px solid var(--color-border);
-    overflow: hidden;
-    background: none;
-    cursor: pointer;
-    padding: 0;
-    opacity: 0.6;
-    transition: all 0.25s ease;
-    flex-shrink: 0;
-  }
-
-  .thumb-btn img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .thumb-btn:hover {
-    opacity: 0.9;
-    border-color: var(--color-text-sec);
-  }
-
-  .thumb-btn.is-active {
-    opacity: 1;
-    border-color: var(--color-text);
-    transform: scale(1.05);
-  }
-
-  /* ── Narrative Breakdown ── */
-  .case-study-narrative {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    padding-bottom: var(--space-12);
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: var(--space-12);
-  }
-
-  @media (min-width: 768px) {
-    .case-study-narrative {
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-8);
-    }
   }
 
   .narrative-block {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: rgba(var(--color-surface-rgb), 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: var(--space-6);
-    border-radius: 4px;
-  }
-
-  .narrative-label {
-    letter-spacing: var(--ls-wide);
-    color: var(--color-text-sec);
-    margin-bottom: var(--space-3);
-    font-weight: 500;
-  }
-
-  .narrative-text {
-    line-height: 1.75;
-    color: var(--color-text);
-  }
-
-  /* ── Footer Navigation ── */
-  .next-project-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-bottom: var(--space-16);
+    border-radius: 12px;
   }
 
   .next-project-link {
@@ -470,18 +237,11 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
     text-decoration: none;
     color: var(--color-text);
     padding: var(--space-4) 0;
-    border-bottom: 1px solid var(--color-border);
-    transition: color 0.3s ease;
+    transition: transform 0.3s ease;
   }
 
   .next-project-link:hover {
-    color: var(--color-text-sec);
-  }
-
-  .next-title {
-    font-family: var(--font-headline);
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    font-weight: 700;
+    transform: translateX(10px);
   }
 
   .next-arrow {
@@ -494,8 +254,11 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
   }
 </style>
 
-<script>
+<script type="module">
   import EmblaCarousel from 'embla-carousel';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
 
   class ProjectGallery extends HTMLElement {
     connectedCallback() {
@@ -545,4 +308,18 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
   if (!customElements.get('project-gallery')) {
     customElements.define('project-gallery', ProjectGallery);
   }
+
+  // GSAP reveal animations for elements with .reveal class
+  gsap.utils.toArray('.reveal').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+      },
+    });
+  });
 </script>

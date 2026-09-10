@@ -100,12 +100,19 @@ a:hover {
   align-items: center;
   gap: 0.375rem;
   padding: 0.25rem 0.625rem;
-  border-radius: 100px;
-  background-color: var(--color-bg);
+  border-radius: var(--radius-pill);
+  background-color: var(--glass-bg-strong);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--color-border);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text);
+  transition: box-shadow var(--duration-hover) var(--ease-smooth);
+}
+
+.status-pill-badge:hover {
+  box-shadow: var(--shadow-sm);
 }
 
 .status-dot {
@@ -408,6 +415,37 @@ a:hover {
   will-change: transform;
 }
 
+/* ── Glassmorphism Utility ── */
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+}
+
+.glass-card-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+}
+
+/* ── Hover Lift Utility ── */
+
+.hover-lift {
+  transition: transform var(--duration-lift) var(--ease-out-expo),
+              box-shadow var(--duration-lift) var(--ease-out-expo),
+              border-color var(--duration-hover) var(--ease-editorial);
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
 /* ── Stacked Card Transition ── */
 
 .stacked-cards-container {
@@ -419,12 +457,17 @@ a:hover {
   top: 6rem;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: var(--radius-card);
   margin-bottom: var(--space-12);
-  transition: transform 0.3s var(--ease-editorial);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: transform var(--duration-lift) var(--ease-out-expo),
+              box-shadow var(--duration-lift) var(--ease-out-expo);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   contain: paint;
+}
+
+.stacked-card:hover {
+  box-shadow: var(--shadow-lg);
 }
 
 /* ── Infinite Marquee Ticker ── */
