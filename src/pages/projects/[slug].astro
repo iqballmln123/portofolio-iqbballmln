@@ -145,9 +145,13 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
 </BaseLayout>
 
 <style>
+  ---
   .project-detail-main {
     min-height: 100vh;
     padding-top: var(--space-8);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
   }
 
   .top-nav-bar {
@@ -252,6 +256,7 @@ const nextProject = featuredProjects[(currentIndex + 1) % featuredProjects.lengt
   .next-project-link:hover .next-arrow {
     transform: translateX(6px);
   }
+---
 </style>
 
 <script type="module">
