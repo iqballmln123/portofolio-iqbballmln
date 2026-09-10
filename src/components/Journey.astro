@@ -160,358 +160,93 @@ const pillars = [
 </section>
 
 <style>
-  .journey-header {
-    margin-bottom: var(--space-4);
-  }
-
-  /* ── Editorial Bio Hero Block & 3D Layout ── */
-  .about-hero-block {
-    margin-bottom: var(--space-12);
-    padding-bottom: var(--space-8);
-    border-bottom: 0.5px solid var(--color-border);
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: center;
-  }
-
-  @media (min-width: 992px) {
-    .about-grid {
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: var(--space-8);
-    }
-  }
-
-  .quote-reveal-wrap {
-    overflow: hidden;
-    margin-bottom: var(--space-4);
-  }
-
-  .about-pull-quote {
-    font-family: var(--font-headline);
-    font-style: italic;
-    font-weight: 700;
-    font-size: clamp(1.25rem, 2.5vw, 2rem);
-    line-height: 1.35;
-    color: var(--color-text);
-    position: relative;
-    padding-left: var(--space-6);
-  }
-
-  .about-pull-quote::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.25rem;
-    bottom: 0.25rem;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--color-text), var(--color-text-sec));
-    border-radius: 2px;
-    transform-origin: top;
-  }
-
-  .about-narrative {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.15vw, 1.0625rem);
-    line-height: var(--lh-body);
-  }
-
-  /* ── 3D Arduino Stage Card — Glassmorphism ── */
-  .arduino-stage-card {
+  .journey-section {
     background: var(--glass-bg-strong);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-4);
-    display: flex;
-    flex-direction: column;
+    padding: var(--space-8);
+    margin-bottom: var(--section-gap);
     box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
-    transition: box-shadow var(--duration-lift) var(--ease-out-expo),
-                transform var(--duration-lift) var(--ease-out-expo);
   }
 
-  .arduino-stage-card:hover {
-    box-shadow: var(--shadow-xl);
-    transform: translateY(-4px);
+  .journey-header {
+    margin-bottom: var(--space-4);
   }
 
-  .stage-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: var(--space-3);
-    border-bottom: 1px solid rgba(10, 10, 10, 0.06);
-  }
-
-  .stage-tag {
-    color: var(--color-text-sec);
-  }
-
-  .canvas-wrapper {
-    position: relative;
-    width: 100%;
-    height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(circle at center, #F5F4EE 0%, var(--color-bg) 100%);
+  .about-hero-block {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 0.5px solid var(--color-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border-radius: var(--radius-card);
-    margin-block: var(--space-3);
-    cursor: grab;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
+  }
+  .about-hero-block:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
   }
 
-  .canvas-wrapper:active {
-    cursor: grabbing;
+  .arduino-stage-card {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
+  }
+  .arduino-stage-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
   }
 
-  #arduino-canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-  }
-
-  .stage-footer {
-    text-align: center;
-    padding-top: var(--space-2);
-    border-top: 1px dashed rgba(10, 10, 10, 0.08);
-  }
-
-  /* ── Pillars Grid — Glassmorphism Cards ── */
   .pillars-section {
     margin-bottom: var(--space-16);
   }
-
-  .section-sublabel {
-    letter-spacing: var(--ls-wide);
-    margin-bottom: var(--space-6);
-    display: block;
-    text-transform: uppercase;
-  }
-
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  @media (min-width: 768px) {
-    .pillars-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
-    }
-  }
-
   .pillar-card {
-    background: var(--glass-bg-strong);
+    background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
-    padding: var(--space-6);
     border-radius: var(--radius-card);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
     box-shadow: var(--shadow-sm);
-    transition: border-color var(--duration-hover) var(--ease-editorial),
-                transform var(--duration-lift) var(--ease-out-expo),
-                box-shadow var(--duration-lift) var(--ease-out-expo);
+    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
   }
-
   .pillar-card:hover {
-    border-color: rgba(10, 10, 10, 0.2);
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
   }
 
-  .pillar-top-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: var(--space-4);
-  }
-
-  .pillar-num-badge {
-    align-self: flex-start;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--color-text);
-    background-color: var(--color-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-card);
-    transition: background-color var(--duration-hover) var(--ease-smooth),
-                color var(--duration-hover) var(--ease-smooth);
-  }
-
-  .pillar-card:hover .pillar-num-badge {
-    background-color: var(--color-text);
-    color: var(--color-bg);
-  }
-
-  .pillar-tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .pillar-tag-pill {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-text-sec);
-    background-color: rgba(10, 10, 10, 0.03);
-    border: 1px solid var(--color-border);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-pill);
-    line-height: 1.4;
-    transition: background-color var(--duration-hover) var(--ease-smooth),
-                color var(--duration-hover) var(--ease-smooth),
-                border-color var(--duration-hover) var(--ease-smooth);
-  }
-
-  .pillar-tag-pill:hover {
-    background-color: var(--color-text);
-    color: var(--color-bg);
-    border-color: var(--color-text);
-  }
-
-  .pillar-title {
-    font-family: var(--font-headline);
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 700;
-    line-height: 1.25;
-    color: var(--color-text);
-    margin-bottom: var(--space-3);
-  }
-
-  .pillar-desc {
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    margin-bottom: var(--space-6);
-  }
-
-  .pillar-footer {
-    margin-top: auto;
-    padding-top: var(--space-3);
-    border-top: 1px dashed rgba(10, 10, 10, 0.08);
-  }
-
-  /* ── Milestones Pinned Horizontal Scroll — Enhanced ── */
   .timeline-section {
     overflow: hidden;
-  }
-
-  .milestones-pin-wrapper {
-    width: 100%;
-  }
-
-  .milestones-horizontal-track {
-    display: flex;
-    gap: var(--space-6);
-    width: max-content;
-    will-change: transform;
-  }
-
-  .milestone-card-item {
-    position: relative;
-    width: 320px;
-    background: var(--glass-bg-strong);
+    background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
     padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+  }
+  .milestone-card-item {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-card);
-    flex-shrink: 0;
-    overflow: hidden;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow var(--duration-lift) var(--ease-out-expo),
-                transform var(--duration-lift) var(--ease-out-expo),
-                border-color var(--duration-hover) var(--ease-editorial);
+    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
   }
-
   .milestone-card-item:hover {
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-    border-color: rgba(10, 10, 10, 0.15);
   }
 
-  @media (min-width: 768px) {
-    .milestone-card-item {
-      width: 420px;
-    }
+  /* improve scroll reveal stagger for sections */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
   }
-
-  .milestone-parallax-num {
-    position: absolute;
-    right: -10px;
-    bottom: -20px;
-    font-family: var(--font-headline);
-    font-size: 8rem;
-    font-weight: 900;
-    color: rgba(10, 10, 10, 0.04);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    transition: color var(--duration-lift) var(--ease-smooth);
-  }
-
-  .milestone-card-item:hover .milestone-parallax-num {
-    color: rgba(10, 10, 10, 0.07);
-  }
-
-  .milestone-content {
-    position: relative;
-    z-index: 1;
-  }
-
-  .milestone-header-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--space-3);
-  }
-
-  .milestone-year {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    color: var(--color-text-sec);
-    font-size: 0.75rem;
-    background-color: rgba(10, 10, 10, 0.02);
-    transition: background-color var(--duration-hover) var(--ease-smooth);
-  }
-
-  .milestone-card-item:hover .milestone-year {
-    background-color: rgba(10, 10, 10, 0.05);
-  }
-
-  .milestone-role {
-    font-family: var(--font-headline);
-    font-size: 1.375rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 0.25rem;
-    line-height: 1.25;
-  }
-
-  .milestone-company {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--color-text-sec);
-    margin-bottom: var(--space-4);
-  }
-
-  .milestone-desc {
-    line-height: 1.6;
-    font-size: 0.9375rem;
+</style>    font-size: 0.9375rem;
   }
 </style>
 
