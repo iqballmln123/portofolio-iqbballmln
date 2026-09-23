@@ -84,5 +84,11 @@
   /* ── Border Radius ── */
   --radius-card:  8px;
   --radius-lg:    12px;
+  --radius-bento: 16px;
   --radius-pill:  100px;
+
+  /* ── Bento Grid ── */
+  --bento-gap:    16px;
+  --accent-gradient: linear-gradient(135deg, #0A0A0A 0%, #3a3a3a 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, rgba(10,10,10,0.08) 0%, rgba(10,10,10,0.02) 100%);
 }

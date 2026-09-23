@@ -34,6 +34,7 @@ const milestones = [
 const pillars = [
   {
     number: '01',
+    icon: '📱',
     title: 'Mobile App Engineering',
     tags: ['Kotlin', 'Jetpack Compose', 'MVVM'],
     status: 'Primary Skill',
@@ -41,6 +42,7 @@ const pillars = [
   },
   {
     number: '02',
+    icon: '⚡',
     title: 'IoT & Embedded Systems',
     tags: ['ESP32', 'Sensors', 'Firebase', 'GSM'],
     status: 'Hardware System',
@@ -48,6 +50,7 @@ const pillars = [
   },
   {
     number: '03',
+    icon: '🌐',
     title: 'Network & Automation',
     tags: ['Python', 'Streamlit', 'Telkomsel Ops'],
     status: 'Enterprise Ops',
@@ -62,82 +65,124 @@ const pillars = [
       <ChapterNumber number="02" label="About & Journey" />
     </div>
 
-    <!-- Editorial Bio Hero Block with 3D Arduino Showcase -->
-    <div class="about-hero-block">
-      <div class="about-grid">
-        <!-- Left: Editorial Text Narrative -->
-        <div class="about-text-col">
-          <div class="quote-reveal-wrap">
-            <blockquote class="about-pull-quote quote-line" id="quote-line-1">
-              "Lulusan D3 Rekayasa Perangkat Lunak Aplikasi dari Telkom University dengan latar belakang mobile development, IoT engineering, dan jaringan telekomunikasi."
-            </blockquote>
-          </div>
-          <p class="about-narrative text-secondary reveal">
+    <!-- ═══════════════════════════════════════════════
+         BENTO GRID — Bio + 3D Arduino
+         ═══════════════════════════════════════════════ -->
+    <div class="bento-grid reveal">
+      <!-- Large Bio Card (spans 2 cols on desktop) -->
+      <div class="bento-card bento-card--bio">
+        <div class="bento-card__accent-line"></div>
+        <div class="bento-card__body">
+          <blockquote class="bento-pullquote quote-line" id="quote-line-1">
+            "Lulusan D3 Rekayasa Perangkat Lunak Aplikasi dari Telkom University dengan latar belakang mobile development, IoT engineering, dan jaringan telekomunikasi."
+          </blockquote>
+          <p class="bento-narrative text-secondary">
             Memulai dari pengembangan aplikasi Android dengan Kotlin dan Jetpack Compose, lalu memperluas ke sistem IoT berbasis ESP32 dan Firebase. Pada awal 2026 menyelesaikan internship di Divisi Network & IoT Telkomsel, membangun automasi pelaporan coverage jaringan yang dipakai langsung oleh tim Network Operations. Saat ini mengarahkan langkah berikutnya ke sektor industrial dan mining IoT.
           </p>
         </div>
+      </div>
 
-        <!-- Right: 3D Arduino Uno Model Showcase Stage -->
-        <div class="about-3d-col reveal" id="arduino-3d-wrapper">
-          <div class="arduino-stage-card">
-            <div class="stage-header">
-              <span class="status-pill-badge">
-                <span class="status-dot"></span>
-                <span>3D Interactive Model</span>
-              </span>
-              <span class="stage-tag text-mono-sm">MODEL: ARDUINO_UNO_R3</span>
-            </div>
-            
-            <div class="canvas-wrapper">
-              <canvas id="arduino-canvas"></canvas>
-            </div>
-
-            <div class="stage-footer">
-              <span class="text-mono-sm text-secondary">Hover / Drag untuk rotasi 3D</span>
-            </div>
+      <!-- 3D Arduino Model Card -->
+      <div class="bento-card bento-card--3d" id="arduino-3d-wrapper">
+        <div class="bento-card__accent-line"></div>
+        <div class="bento-card__body">
+          <div class="stage-header">
+            <span class="status-pill-badge">
+              <span class="status-dot"></span>
+              <span>3D Interactive</span>
+            </span>
+            <span class="stage-tag text-mono-sm">ARDUINO_UNO_R3</span>
           </div>
+          <div class="canvas-wrapper">
+            <canvas id="arduino-canvas"></canvas>
+          </div>
+          <div class="stage-footer">
+            <span class="text-mono-sm text-secondary">Hover / Drag untuk rotasi 3D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small accent card: Location -->
+      <div class="bento-card bento-card--accent">
+        <div class="bento-accent-icon">📍</div>
+        <div class="bento-accent-info">
+          <span class="text-mono-sm text-secondary">LOKASI</span>
+          <span class="bento-accent-value">Bandung, Indonesia</span>
+        </div>
+      </div>
+
+      <!-- Small accent card: Education -->
+      <div class="bento-card bento-card--accent">
+        <div class="bento-accent-icon">🎓</div>
+        <div class="bento-accent-info">
+          <span class="text-mono-sm text-secondary">PENDIDIKAN</span>
+          <span class="bento-accent-value">Telkom University</span>
+        </div>
+      </div>
+
+      <!-- Small accent card: Focus -->
+      <div class="bento-card bento-card--accent">
+        <div class="bento-accent-icon">🎯</div>
+        <div class="bento-accent-info">
+          <span class="text-mono-sm text-secondary">FOKUS</span>
+          <span class="bento-accent-value">Software & IoT</span>
         </div>
       </div>
     </div>
 
-    <!-- Core Engineering Pillars -->
+    <!-- ═══════════════════════════════════════════════
+         HORIZONTAL CAROUSEL — Core Engineering Pillars
+         ═══════════════════════════════════════════════ -->
     <div class="pillars-section">
       <h3 class="section-sublabel text-mono-sm text-secondary reveal">CORE ENGINEERING PILLARS</h3>
-      <div class="pillars-grid">
-        {pillars.map((pillar, idx) => (
-          <div class="pillar-card pillar-stagger" data-index={idx}>
-            <div class="pillar-top-row">
-              <span class="pillar-num-badge text-mono-sm">{pillar.number}</span>
-              <div class="pillar-tag-list">
+
+      <div class="carousel-viewport" id="pillars-carousel">
+        <div class="carousel-track" id="pillars-track">
+          {pillars.map((pillar, idx) => (
+            <div class="carousel-card pillar-stagger" data-index={idx}>
+              <div class="carousel-card__watermark">{pillar.number}</div>
+              <div class="carousel-card__icon">{pillar.icon}</div>
+              <div class="carousel-card__tags">
                 {pillar.tags.map((tag) => (
                   <span class="pillar-tag-pill text-mono-sm">{tag}</span>
                 ))}
               </div>
+              <h4 class="carousel-card__title">{pillar.title}</h4>
+              <p class="carousel-card__desc text-secondary">{pillar.desc}</p>
+              <div class="carousel-card__footer">
+                <span class="status-pill-badge">
+                  <span class="status-dot"></span>
+                  <span>{pillar.status}</span>
+                </span>
+              </div>
             </div>
-            
-            <h4 class="pillar-title">{pillar.title}</h4>
-            <p class="pillar-desc text-secondary">{pillar.desc}</p>
+          ))}
+        </div>
+      </div>
 
-            <div class="pillar-footer">
-              <span class="status-pill-badge">
-                <span class="status-dot"></span>
-                <span>{pillar.status}</span>
-              </span>
-            </div>
-          </div>
+      <!-- Scroll indicator dots -->
+      <div class="carousel-dots" id="carousel-dots">
+        {pillars.map((_, idx) => (
+          <button
+            class={`carousel-dot ${idx === 0 ? 'carousel-dot--active' : ''}`}
+            data-index={idx}
+            aria-label={`Go to pillar ${idx + 1}`}
+          ></button>
         ))}
       </div>
     </div>
 
-    <!-- Career Milestones: Pinned Horizontal Scroll on Desktop -->
+    <!-- ═══════════════════════════════════════════════
+         CAREER MILESTONES — Pinned Horizontal Scroll
+         ═══════════════════════════════════════════════ -->
     <div class="timeline-section" id="timeline-pinned-section">
       <h3 class="section-sublabel text-mono-sm text-secondary reveal">CAREER MILESTONES</h3>
 
-      <!-- Track Container for Horizontal Pin -->
       <div class="milestones-pin-wrapper">
         <div class="milestones-horizontal-track" id="milestones-track">
           {milestones.map((item) => (
             <div class="milestone-card-item">
+              <div class="milestone-card-item__top-border"></div>
               <div class="milestone-parallax-num" data-speed="0.8">{item.num}</div>
               <div class="milestone-content">
                 <div class="milestone-header-meta">
@@ -160,93 +205,459 @@ const pillars = [
 </section>
 
 <style>
-  .journey-section {
-    background: var(--glass-bg-strong);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-8);
-    margin-bottom: var(--section-gap);
-    box-shadow: var(--shadow-lg);
-  }
-
+  /* ─── Journey Header ─── */
   .journey-header {
     margin-bottom: var(--space-4);
   }
 
-  .about-hero-block {
-    margin-bottom: var(--space-12);
-    padding-bottom: var(--space-8);
-    border-bottom: 0.5px solid var(--color-border);
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
-    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
+  /* ═══════════════════════════════════════
+     BENTO GRID
+     ═══════════════════════════════════════ */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--bento-gap);
+    margin-bottom: var(--space-16);
   }
-  .about-hero-block:hover {
+
+  @media (min-width: 768px) {
+    .bento-grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+    }
+    .bento-card--bio {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+    .bento-card--3d {
+      grid-column: 3 / 4;
+      grid-row: 1 / 3;
+    }
+    .bento-card--accent:nth-child(3) { grid-column: 1 / 2; grid-row: 2 / 3; }
+    .bento-card--accent:nth-child(4) { grid-column: 2 / 3; grid-row: 2 / 3; }
+    .bento-card--accent:nth-child(5) { grid-column: 3 / 4; grid-row: 3 / 4; }
+  }
+
+  @media (min-width: 1024px) {
+    .bento-grid {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .bento-card--bio {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+    }
+    .bento-card--3d {
+      grid-column: 2 / 4;
+      grid-row: 1 / 2;
+    }
+    .bento-card--accent:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+    .bento-card--accent:nth-child(4) { grid-column: 3 / 4; grid-row: 2 / 3; }
+    .bento-card--accent:nth-child(5) { display: none; }
+  }
+
+  /* ─── Bento Card Base ─── */
+  .bento-card {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-bento);
+    overflow: hidden;
+    transition:
+      transform var(--duration-lift) var(--ease-out-expo),
+      box-shadow var(--duration-lift) var(--ease-out-expo),
+      border-color var(--duration-hover) var(--ease-editorial);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .bento-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-alt);
   }
 
-  .arduino-stage-card {
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
-  }
-  .arduino-stage-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-xl);
+  .bento-card__accent-line {
+    height: 3px;
+    background: var(--accent-gradient);
+    width: 100%;
   }
 
+  .bento-card__body {
+    padding: var(--space-4) var(--space-4) var(--space-3);
+  }
+
+  /* ─── Bio Card ─── */
+  .bento-card--bio .bento-card__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 260px;
+  }
+
+  .bento-pullquote {
+    font-family: var(--font-headline);
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    line-height: 1.4;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3) 0;
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--color-text);
+    position: relative;
+  }
+
+  .bento-narrative {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    padding-left: var(--space-4);
+  }
+
+  /* ─── 3D Arduino Card ─── */
+  .bento-card--3d .bento-card__body {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-1);
+  }
+
+  .stage-tag {
+    color: var(--color-text-muted);
+  }
+
+  .canvas-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--accent-gradient-subtle);
+  }
+
+  #arduino-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .stage-footer {
+    text-align: center;
+    padding-top: var(--space-1);
+    padding-bottom: var(--space-1);
+  }
+
+  /* ─── Accent Mini Cards ─── */
+  .bento-card--accent {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    cursor: default;
+  }
+
+  .bento-card--accent .bento-card__accent-line {
+    display: none;
+  }
+
+  .bento-accent-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .bento-accent-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .bento-accent-value {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+  }
+
+  /* ═══════════════════════════════════════
+     HORIZONTAL CAROUSEL — Pillars
+     ═══════════════════════════════════════ */
   .pillars-section {
     margin-bottom: var(--space-16);
   }
-  .pillar-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
-  }
-  .pillar-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
+
+  .pillars-section .section-sublabel {
+    margin-bottom: var(--space-4);
   }
 
+  .carousel-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: var(--space-2);
+  }
+
+  .carousel-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: var(--bento-gap);
+    padding-right: var(--space-4);
+  }
+
+  /* ─── Carousel Card ─── */
+  .carousel-card {
+    position: relative;
+    flex: 0 0 calc(85vw - var(--space-6));
+    max-width: 380px;
+    min-height: 320px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-bento);
+    padding: var(--space-4) var(--space-4) var(--space-3);
+    overflow: hidden;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform var(--duration-lift) var(--ease-out-expo),
+      box-shadow var(--duration-lift) var(--ease-out-expo),
+      border-color var(--duration-hover) var(--ease-editorial);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (min-width: 768px) {
+    .carousel-card {
+      flex: 0 0 340px;
+    }
+  }
+
+  .carousel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-alt);
+  }
+
+  .carousel-card__watermark {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    font-family: var(--font-headline);
+    font-size: 8rem;
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(10, 10, 10, 0.04);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .carousel-card__icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-3);
+    line-height: 1;
+  }
+
+  .carousel-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-2);
+  }
+
+  .pillar-tag-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-sec);
+    font-size: 0.6875rem;
+    letter-spacing: var(--ls-mono);
+    transition: background var(--duration-hover) var(--ease-smooth);
+  }
+
+  .carousel-card:hover .pillar-tag-pill {
+    background: var(--color-border);
+  }
+
+  .carousel-card__title {
+    font-family: var(--font-headline);
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+  }
+
+  .carousel-card__desc {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    flex-grow: 1;
+  }
+
+  .carousel-card__footer {
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ─── Carousel Dots ─── */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: var(--space-3);
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-border-alt);
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      background var(--duration-hover) var(--ease-smooth),
+      transform var(--duration-hover) var(--ease-smooth);
+  }
+
+  .carousel-dot:hover {
+    background: var(--color-text-muted);
+  }
+
+  .carousel-dot--active {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    transform: scale(1.25);
+  }
+
+  /* ═══════════════════════════════════════
+     CAREER MILESTONES — Horizontal Pin
+     ═══════════════════════════════════════ */
   .timeline-section {
     overflow: hidden;
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    box-shadow: var(--shadow-md);
+    padding: var(--space-6) 0;
   }
+
+  .timeline-section .section-sublabel {
+    margin-bottom: var(--space-4);
+  }
+
+  .milestones-pin-wrapper {
+    overflow: visible;
+  }
+
+  .milestones-horizontal-track {
+    display: flex;
+    gap: var(--bento-gap);
+    padding-right: var(--space-8);
+  }
+
   .milestone-card-item {
-    background: var(--glass-bg-strong);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-card);
+    position: relative;
+    flex: 0 0 340px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-bento);
+    overflow: hidden;
+    padding: 0;
+    transition:
+      transform var(--duration-lift) var(--ease-out-expo),
+      box-shadow var(--duration-lift) var(--ease-out-expo),
+      border-color var(--duration-hover) var(--ease-editorial);
     box-shadow: var(--shadow-sm);
-    transition: transform var(--duration-lift) var(--ease-out-expo), box-shadow var(--duration-lift) var(--ease-out-expo);
   }
+
   .milestone-card-item:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-alt);
   }
 
-  /* improve scroll reveal stagger for sections */
+  .milestone-card-item__top-border {
+    height: 3px;
+    width: 100%;
+    background: var(--accent-gradient);
+  }
+
+  .milestone-parallax-num {
+    font-family: var(--font-headline);
+    font-weight: 900;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(10, 10, 10, 0.05);
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .milestone-content {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .milestone-header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .milestone-year {
+    color: var(--color-text-muted);
+  }
+
+  .milestone-role {
+    font-family: var(--font-headline);
+    font-weight: 800;
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: var(--color-text);
+    margin-bottom: 4px;
+  }
+
+  .milestone-company {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta-sm);
+    letter-spacing: var(--ls-mono);
+    color: var(--color-text-sec);
+    margin-bottom: var(--space-2);
+  }
+
+  .milestone-desc {
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  /* ─── Scroll Reveal ─── */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
   }
-</style>    font-size: 0.9375rem;
+
+  /* ─── Mobile stacking for milestones ─── */
+  @media (max-width: 767px) {
+    .milestones-horizontal-track {
+      flex-direction: column;
+      padding-right: 0;
+    }
+    .milestone-card-item {
+      flex: 0 0 auto;
+    }
   }
 </style>
 
@@ -259,8 +670,61 @@ const pillars = [
   document.addEventListener('DOMContentLoaded', () => {
     initJourneyAnimations();
     initArduino3DModel();
+    initCarouselDots();
   });
 
+  /* ═══════════════════════════════
+     Carousel Dot Navigation
+     ═══════════════════════════════ */
+  function initCarouselDots() {
+    const viewport = document.getElementById('pillars-carousel');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const cards = document.querySelectorAll('.carousel-card');
+
+    if (!viewport || dots.length === 0 || cards.length === 0) return;
+
+    // Click dot → scroll to card
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt((dot as HTMLElement).dataset.index || '0', 10);
+        const card = cards[idx] as HTMLElement;
+        if (!card) return;
+
+        viewport.scrollTo({
+          left: card.offsetLeft - viewport.offsetLeft - 16,
+          behavior: 'smooth',
+        });
+      });
+    });
+
+    // On scroll → update active dot
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+    viewport.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollLeft = viewport.scrollLeft;
+        let closestIdx = 0;
+        let closestDist = Infinity;
+
+        cards.forEach((card, idx) => {
+          const el = card as HTMLElement;
+          const dist = Math.abs(el.offsetLeft - viewport.offsetLeft - scrollLeft);
+          if (dist < closestDist) {
+            closestDist = dist;
+            closestIdx = idx;
+          }
+        });
+
+        dots.forEach((d, i) => {
+          d.classList.toggle('carousel-dot--active', i === closestIdx);
+        });
+      }, 80);
+    });
+  }
+
+  /* ═══════════════════════════════
+     Arduino 3D Model
+     ═══════════════════════════════ */
   function initArduino3DModel() {
     const canvas = document.getElementById('arduino-canvas') as HTMLCanvasElement;
     if (!canvas) return;
@@ -268,13 +732,12 @@ const pillars = [
     const wrapper = canvas.parentElement;
     if (!wrapper) return;
 
-    // 1. Scene & Camera Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, wrapper.clientWidth / wrapper.clientHeight, 0.1, 1000);
     camera.position.set(0, 4, 14);
 
     const renderer = new THREE.WebGLRenderer({
-      canvas: canvas,
+      canvas,
       alpha: true,
       antialias: true,
       powerPreference: 'high-performance',
@@ -285,9 +748,8 @@ const pillars = [
       (renderer as any).outputColorSpace = THREE.SRGBColorSpace;
     }
 
-    // 2. Lighting Setup (Bright Studio Lighting for Vivid Colors)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
-    scene.add(ambientLight);
+    // Lighting
+    scene.add(new THREE.AmbientLight(0xffffff, 2.2));
 
     const dirLight1 = new THREE.DirectionalLight(0xffffff, 2.5);
     dirLight1.position.set(10, 20, 15);
@@ -301,32 +763,12 @@ const pillars = [
     pointLight.position.set(0, 5, 5);
     scene.add(pointLight);
 
-    // 3. Iconic Arduino Materials (Rich Vivid Blue PCB & Metallic accents)
-    const pcbBlueMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00878f, // Iconic Arduino Blue/Teal (#00878F)
-      roughness: 0.35,
-      metalness: 0.15,
-    });
+    // Materials
+    const pcbBlueMaterial = new THREE.MeshStandardMaterial({ color: 0x00878f, roughness: 0.35, metalness: 0.15 });
+    const darkChipMaterial = new THREE.MeshStandardMaterial({ color: 0x1c1d21, roughness: 0.45, metalness: 0.1 });
+    const silverMetalMaterial = new THREE.MeshStandardMaterial({ color: 0xc8cbd0, roughness: 0.2, metalness: 0.9 });
+    const goldPinMaterial = new THREE.MeshStandardMaterial({ color: 0xe5c158, roughness: 0.3, metalness: 0.8 });
 
-    const darkChipMaterial = new THREE.MeshStandardMaterial({
-      color: 0x1c1d21, // Dark charcoal IC chips & female header sockets
-      roughness: 0.45,
-      metalness: 0.1,
-    });
-
-    const silverMetalMaterial = new THREE.MeshStandardMaterial({
-      color: 0xc8cbd0, // Silver USB port & crystal oscillator
-      roughness: 0.2,
-      metalness: 0.9,
-    });
-
-    const goldPinMaterial = new THREE.MeshStandardMaterial({
-      color: 0xe5c158, // Gold header pins
-      roughness: 0.3,
-      metalness: 0.8,
-    });
-
-    // 4. Load 3D GLB Model & Assign Vivid Materials
     let arduinoModel: THREE.Group | null = null;
     let targetRotationY = 0.4;
     let targetRotationX = 0.25;
@@ -338,7 +780,6 @@ const pillars = [
       (gltf) => {
         arduinoModel = gltf.scene;
 
-        // Traverse all meshes and assign rich Arduino color palette
         arduinoModel.traverse((child) => {
           if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
@@ -359,21 +800,18 @@ const pillars = [
           }
         });
 
-        // Center geometry automatically
         const box = new THREE.Box3().setFromObject(arduinoModel);
         const center = box.getCenter(new THREE.Vector3());
         arduinoModel.position.sub(center);
 
-        // Initial 3D orientation
-        arduinoModel.rotation.y = -Math.PI * 2; // Initial state for scroll spin reveal
+        arduinoModel.rotation.y = -Math.PI * 2;
         arduinoModel.rotation.x = targetRotationX;
-        arduinoModel.scale.set(0, 0, 0); // Initial scale for entrance animation
+        arduinoModel.scale.set(0, 0, 0);
 
         const pivotGroup = new THREE.Group();
         pivotGroup.add(arduinoModel);
         scene.add(pivotGroup);
 
-        // GSAP ScrollTrigger Entrance Animation (Animate In on Scroll)
         gsap.registerPlugin(ScrollTrigger);
 
         ScrollTrigger.create({
@@ -383,9 +821,7 @@ const pillars = [
           onEnter: () => {
             if (arduinoModel) {
               gsap.to(arduinoModel.scale, {
-                x: 1.35,
-                y: 1.35,
-                z: 1.35,
+                x: 1.35, y: 1.35, z: 1.35,
                 duration: 1.4,
                 ease: 'back.out(1.4)',
               });
@@ -404,12 +840,11 @@ const pillars = [
       }
     );
 
-    // 5. Mouse / Touch Interactions
+    // Mouse interactions
     wrapper.addEventListener('mousemove', (e: MouseEvent) => {
       const rect = wrapper.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-
       targetRotationY = x * 1.5 + 0.4;
       targetRotationX = y * 1.2 + 0.25;
       isMouseOver = true;
@@ -421,32 +856,26 @@ const pillars = [
       isMouseOver = false;
     });
 
-    // 6. Render Loop & Idle Sine Floating Animation
-    let clock = new THREE.Clock();
+    // Render loop
+    const clock = new THREE.Clock();
 
     function animate() {
       requestAnimationFrame(animate);
-
       if (arduinoModel) {
         const elapsedTime = clock.getElapsedTime();
-
         if (!isMouseOver) {
-          // Subtle idle floating sine wave
           arduinoModel.position.y = Math.sin(elapsedTime * 1.8) * 0.2;
           arduinoModel.rotation.z = Math.sin(elapsedTime * 1.2) * 0.05;
         }
-
-        // Smooth Lerp interpolation for rotation
         arduinoModel.rotation.y += (targetRotationY - arduinoModel.rotation.y) * 0.08;
         arduinoModel.rotation.x += (targetRotationX - arduinoModel.rotation.x) * 0.08;
       }
-
       renderer.render(scene, camera);
     }
 
     animate();
 
-    // 7. Responsive Resize Handler
+    // Resize
     window.addEventListener('resize', () => {
       if (!wrapper) return;
       camera.aspect = wrapper.clientWidth / wrapper.clientHeight;
@@ -455,6 +884,9 @@ const pillars = [
     });
   }
 
+  /* ═══════════════════════════════
+     GSAP Scroll Animations
+     ═══════════════════════════════ */
   function initJourneyAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -469,7 +901,7 @@ const pillars = [
       (context) => {
         const { reduceMotion, isDesktop } = context.conditions!;
 
-        // 1. Text Reveal Animation for Pull Quote
+        // Quote reveal animation
         const quoteLine = document.querySelector('.quote-line');
         if (quoteLine && !reduceMotion) {
           gsap.fromTo(
@@ -481,7 +913,7 @@ const pillars = [
               duration: 1.2,
               ease: 'power3.inOut',
               scrollTrigger: {
-                trigger: '.quote-reveal-wrap',
+                trigger: '.bento-card--bio',
                 start: 'top 85%',
                 once: true,
               },
@@ -489,7 +921,29 @@ const pillars = [
           );
         }
 
-        // 2. Pillars Stagger Reveal
+        // Bento grid cards stagger
+        const bentoCards = document.querySelectorAll('.bento-card');
+        if (bentoCards.length && !reduceMotion) {
+          gsap.fromTo(
+            bentoCards,
+            { autoAlpha: 0, y: 30, scale: 0.97 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.7,
+              stagger: 0.1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: '.bento-grid',
+                start: 'top 85%',
+                once: true,
+              },
+            }
+          );
+        }
+
+        // Pillars carousel stagger
         const pillarCards = document.querySelectorAll('.pillar-stagger');
         if (pillarCards.length && !reduceMotion) {
           gsap.fromTo(
@@ -502,7 +956,7 @@ const pillars = [
               stagger: 0.15,
               ease: 'power2.out',
               scrollTrigger: {
-                trigger: '.pillars-grid',
+                trigger: '.pillars-section',
                 start: 'top 85%',
                 once: true,
               },
@@ -510,7 +964,7 @@ const pillars = [
           );
         }
 
-        // 3. Pinned Horizontal Scroll on Desktop for Career Milestones
+        // Pinned horizontal scroll on Desktop for milestones
         const track = document.getElementById('milestones-track');
         const pinnedSection = document.getElementById('timeline-pinned-section');
 
@@ -532,7 +986,7 @@ const pillars = [
             },
           });
 
-          // Parallax movement for big numbers inside milestone cards
+          // Parallax big numbers
           const nums = document.querySelectorAll('.milestone-parallax-num');
           nums.forEach((num) => {
             gsap.to(num, {
